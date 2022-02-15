@@ -56,7 +56,7 @@
 
 话说，我 12.30 才发现，我 USACO 学校填的是 jk??
 
-### 1. luogu : [handsome_mzx](https://www.luogu.com.cn/user/414308)
+### 1. luogu : [OIMOmzx](https://www.luogu.com.cn/user/414308)
 
 ### 2. Github : [OIMOmzx](https://github.com/OIMOmzx)
 
@@ -79,7 +79,7 @@
 
 ### 11. Leetcode（常用） : [OIMOmzx](https://leetcode-cn.com/u/handsome_mzx/)
 
-### 12. ACWing（没用过） : [OIMOmzx](https://www.acwing.com/user/myspace/index/114501/)
+### 12. ACWing : [OIMOmzx](https://www.acwing.com/user/myspace/index/114501/)
 
 ### 12. CSDN [OIMOmzx](https://blog.csdn.net/OIMOmzx?spm=1000.2115.3001.5343)
 
