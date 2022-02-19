@@ -1,154 +1,90 @@
 #include <iostream>
-#include <algorithm>
-#include <cstring>
-#include <cstdio>
 using namespace std;
 
-const long long Max = 10000010;
-
-long long n, t;
-long long a[Max * 4];
-int type;
-long long p, q, m;
+const int Max = 1000010;
+long long type, p, q, y;
+long long n, m, ans;
 
 struct node
 {
-    long long l, r, val, lazy;
-}tree[4 * Max]; 
+	long long val, lc, rc;
+	long long lzt;
+}tree[4 * Max];
 
-inline long long read()
+void build(long long k, long long l, long long r)
 {
-    long long s = 0, f = 0;
-    char ch = ' ';
-    while(!isdigit(ch))
-    {
-        f |= (ch == '-');
-        ch = getchar();
-    }
-    while(isdigit(ch))
-    {
-        s = (s << 3) + (s << 1) + (ch ^ 48);
-        ch = getchar();
-    }
-    return (f) ? (-s) : (s);
+	tree[k].lc = l;
+	tree[k].rc = r;
+	if(tree[k].lc == tree[k].rc)
+	{
+		cin >> tree[k].val;
+		return;
+	}
+	long long mid = (l + r) / 2;
+	long long lchild = k * 2, rchild = k * 2 + 1;
+	build(lchild, l, mid);
+	build(rchild, mid + 1, r);
+	tree[k].val = tree[lchild].val + tree[rchild].val;
 }
 
 void pushdown(long long k)
 {
-    long long lc, rc;
-    lc = k * 2;
-    rc = k * 2 + 1;
-    if(tree[k].lazy)
-    {
-        tree[lc].lazy += tree[k].lazy;
-        tree[lc].val += tree[k].lazy * (tree[lc].r - tree[lc].l + 1);
-        tree[rc].lazy += tree[k].lazy;
-        tree[rc].val += tree[k].lazy * (tree[rc].r - tree[rc].l + 1);
-        tree[k].lazy = 0;
-    }
+	long long lchild = k * 2, rchild = k * 2 + 1;
+	tree[lchild].lzt += tree[k].lzt;
+	tree[rchild].lzt += tree[k].lzt;
+	tree[lchild].val += tree[k].lzt * (tree[lchild].rc - tree[lchild].lc + 1);
+	tree[rchild].val += tree[k].lzt * (tree[rchild].rc - tree[rchild].lc + 1);
+	tree[k].lzt = 0;
 }
 
-void build(long long k, long long l, long long r)
+void query(long long k)
 {
-    tree[k].l = l;
-    tree[k].r = r;
-    tree[k].lazy = 0;
-    if(l == r)
-    {
-        tree[k].val = a[l];
-        return;
-    }
-    long long mid, lc, rc;
-    mid = (l + r) / 2;
-    lc = k * 2;
-    rc = k * 2 + 1;
-    build(lc, l, mid);
-    build(rc, mid + 1, r);
-    tree[k].val = tree[lc].val + tree[rc].val;
+	long long lchild = k * 2, rchild = k * 2 + 1;
+	if(tree[k].lc >= p && tree[k].rc <= q)
+	{
+		ans += tree[k].val;
+		return;
+	}
+	if(tree[k].lzt) pushdown(k);
+	long long mid = (tree[k].lc + tree[k].rc) / 2;
+	if(p <= mid) query(lchild);
+	if(q > mid) query(rchild);
 }
 
-void update(long long k, long long l, long long r, long long v)
+void change(long long k)
 {
-    if(tree[k].l == l && tree[k].r == r)
-    {
-        tree[k].val += v * (tree[k].r - tree[k].l + 1);
-        tree[k].lazy += v;
-        return;
-    }
-    pushdown(k);
-    long long mid, lc, rc;
-    mid = (tree[k].l + tree[k].r) / 2;
-    lc = k * 2;
-    rc = k * 2 + 1;
-    if(r <= mid) 
-    {
-        update(lc, l, r, v);
-    }
-    else 
-    {
-        if(l > mid)
-        {
-            update(rc, l, r, v);
-        }
-        else
-        {
-            update(lc, l, mid, v);
-            update(rc, mid + 1, r, v);
-        }
-    }
-    tree[k].val = tree[lc].val + tree[rc].val;
-}
-
-long long query(long long k, long long l, long long r)
-{
-    if(tree[k].l == l && tree[k].r == r)
-    {
-        return tree[k].val;
-    }
-    pushdown(k);
-    long long mid, lc, rc;
-    long long maxn = 0;
-    mid = (tree[k].l + tree[k].r) / 2;
-    lc = k * 2;
-    rc = k * 2 + 1;
-    if(r <= mid)
-    {
-        return query(lc, l, r);
-    }
-    else 
-    {
-        if(l > mid)
-        {
-            return query(rc, l, r);
-        }
-        else
-        {
-            return query(lc, l, mid) + query(rc, mid + 1, r);
-        }
-    }
+	long long lchild = k * 2, rchild = k * 2 + 1;
+	if(tree[k].lc >= p && tree[k].rc <= q)
+	{
+		tree[k].val += (tree[k].rc - tree[k].lc + 1) * y;
+		tree[k].lzt += y;
+		return;
+	}
+	if(tree[k].lzt) pushdown(k);
+	long long mid = (tree[k].lc + tree[k].rc) / 2;
+	if(p <= mid) change(lchild);
+	if(q > mid) change(rchild);
+	tree[k].val = tree[lchild].val + tree[rchild].val;
 }
 
 int main()
 {
-    cin >> n >> t;
-    for(long long i = 1; i <= n; i++)
-    {
-        a[i] = read();
-    }
-    build(1, 1, n);
-    while(t--)
-    {
-        cin >> type;
-        if(type == 2)
-        {
-            p = read(), q = read();
-            cout << query(1, p, q) << endl;
-        }
-        if(type == 1)
-        {
-            p = read(), q = read(), m = read();
-            update(1, p, q, m);
-        }
-    }
-    return 0;
+	cin >> n >> m;
+	build(1, 1, n);
+	while(m--)
+	{
+		cin >> type >> p >> q;
+		if(type == 1)
+		{
+			cin >> y;
+			change(1);
+		}
+		if(type == 2)
+		{
+			ans = 0;
+			query(1);
+			cout << ans << endl;
+		}
+	}
+	return 0;
 }
