@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
 const int Max = 100010;
@@ -18,7 +19,7 @@ void build(int k, int l, int r)
 	if(tree[k].lc == tree[k].rc)
 	{
 		cin >> tree[k].lzt;
-		tree[k].a[tree[k].lzt % 7]++;
+		tree[k].a[tree[k].lzt % 7] ++;
 		return;
 	}
 	int mid = (l + r) / 2;
@@ -91,7 +92,6 @@ void update(int k)
 		tree[k].a[i] = tree[lchild].a[i] + tree[rchild].a[i];
 	}
 }
-
 
 void query(long long k)
 {
