@@ -36,9 +36,6 @@ int main()
         if(cut(mid) < tar) r = mid;
         else l = mid + 1, ans = mid;
     }
-    //cout << ans * 1.0 / 100 << endl;
-    //if(ans * 1.0 / 100 == 0.67) cout << "0.66" << endl;
-    //else 
     cout << fixed << setprecision(2) << ans * 1.0 / 100 << endl;
     return 0;
 }
