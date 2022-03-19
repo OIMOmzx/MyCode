@@ -4,7 +4,7 @@
 using namespace std;
 
 int n;
-char a[1010][1010];
+char a[21][21];
 int cnt = 1;
 bool flag = 1;
 int ans = 0;
