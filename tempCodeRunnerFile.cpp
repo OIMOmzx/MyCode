@@ -1,62 +1,37 @@
 #include <iostream>
-#include <cstring>
-#include <set>
 using namespace std;
 
-int n;
-char a[1010][1010];
-int cnt = 1;
+int t, k, n;
 bool flag = 1;
-int ans = 0;
-set<string> res;
-
-void dfs(int l, int r, string s)
-{
-    if(l == n && r == n)
-    {
-        s += a[l][r];
-        //cout << s << endl;
-        cnt = s.length();
-        flag = 1;
-        for(int i = 0; i <= cnt / 2 - 1; i++)
-        {
-            if(s[i] != s[cnt - i - 1]) flag = 0;
-        }
-        if(flag == 1)
-        {
-            /*
-            cout << "yee" << endl;
-            cout << cnt << endl;
-            for(int i = 1; i <= cnt; i++)
-            {
-                cout << res[i];
-            }
-            cout << endl;
-            */
-            res.insert(s);
-        }
-        flag = 1, cnt = 0;
-        return;
-    }
-    //res[cnt++] = a[l][r];
-    //cout << l << ',' << r << endl;
-    //cout << cnt - 1 << ":" << res[cnt - 1] << endl;
-    if(l + 1 <= n) dfs(l + 1, r, s + a[l][r]);
-    if(r + 1 <= n) dfs(l, r + 1, s + a[l][r]);
-    return;
-}
 
 int main()
 {
-    cin >> n;
-    for(int i = 1; i <= n; i++)
+    cin >> t;
+    while(t--)
     {
-        for(int j = 1; j <= n; j++)
+        cin >> k >> n;
+        if(k == 1)
         {
-            cin >> a[i][j];
+            if(n % 9 == 0) cout << "aya" << endl;
+            else
+            {
+                cout << "baka" << endl;
+            }
+        }
+        else
+        {
+            int res = 0;
+            while(n >= 1)
+            {
+                int cnt = n % 10;
+                if(cnt != 9) flag = 0;
+                res++;
+                n /= 10;
+            }
+            if(res % k != 0) flag = 0;
+            if(flag == 0) cout << "baka" << endl;
+            else cout << "aya" << endl;
         }
     }
-    dfs(1, 1, "");
-    cout << res.size() << endl;
     return 0;
 }
