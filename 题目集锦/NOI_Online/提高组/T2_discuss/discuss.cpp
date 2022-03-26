@@ -58,6 +58,8 @@ bool is_valid(int x, int y)
 
 int main()
 {
+    freopen("discuss.in", "r", stdin);
+    freopen("discuss.out", "w", stdout);
     t = read();
     for(int i = 1; i <= t; i++)
     {
@@ -76,6 +78,7 @@ int main()
                     tmp.push_back(res);
                     to[res]++;
                 }
+                sort(tmp.begin(), tmp.end());
                 a.push_back(tmp);
             }
             else
