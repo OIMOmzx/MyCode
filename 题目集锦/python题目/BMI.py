@@ -31,5 +31,3 @@ while 1:
             print('Not too thin, or not too fat.')
         else:
             print('Too fat')
-
-
