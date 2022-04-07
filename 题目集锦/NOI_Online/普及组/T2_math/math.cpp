@@ -11,8 +11,8 @@ unsigned long long gcd(unsigned long long a, unsigned long long b)
 
 int main()
 {
-    freopen("math.in", "r", stdin);
-    freopen("math.out", "w", stdout);
+    //freopen("math.in", "r", stdin);
+    //freopen("math.out", "w", stdout);
     cin >> t;
     while(t--)
     {

@@ -1,0 +1,6 @@
+score = int(input())
+if(score >= 90 and score <= 100): print('A')
+elif(score < 90 and score >= 77): print('B')
+elif(score < 75 and score >= 60): print('C')
+elif(score >= 0 and score < 60): print('D')
+else: print('Your input is not avalable')
