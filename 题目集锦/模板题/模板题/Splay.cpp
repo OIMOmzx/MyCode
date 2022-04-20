@@ -1,4 +1,7 @@
 #include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
 using namespace std;
 
 const int Max = 1000010;
@@ -15,7 +18,25 @@ struct node
 int n, cnt, root, t;
 int a[Max];
 int q, l, r, k;
-string type;
+char type[10];
+
+inline int read()
+{
+    int s = 0, f = 0;
+    char ch = ' ';
+    while(!isdigit(ch))
+    {
+        f |= (ch == '-');
+        ch = getchar();
+    }
+    while(isdigit(ch))
+    {
+        s = (s << 3) + (s << 1) + (ch ^ 48);
+        ch = getchar();
+    }
+    return (f) ? (-s) : (s);
+}
+
 
 void Update(int x)
 {
@@ -102,17 +123,17 @@ void Rotate(int x)
 
 void Splay(int x, int goal)
 {
+    //cout << "iqqopee" << endl;
     while(tree[x].fa != goal)
     {
         int y = tree[x].fa, z = tree[y].fa;
         if(z != goal)
         {
-            if((tree[z].son[0] == y) == (tree[y].son[0] == x)) Rotate(y);//x, y, z 在一条链下，要先把 y 翻开。
-            else if((tree[z].son[0] == y) != (tree[y].son[0] == x)) Rotate(x);
+            (tree[z].son[0] == y) ^ (tree[y].son[0] == x) ? Rotate(x) : Rotate(y);//x, y, z 在一条链下，要先把 y 翻开。
         }
         Rotate(x);
-        if(!goal) root = x;
     }
+    if(!goal) root = x;
 }
 
 void print(int rt)
@@ -130,13 +151,16 @@ void print(int rt)
     }
 }
 
-bool Findk(int x, int val)
+int Findk(int x, int val)
 {
     while(1)
     {
         Pushdown(x);
         int sn = tree[x].son[0] ? tree[tree[x].son[0]].size + 1 : 1;
-        if(val == sn) return x;
+        if(val == sn) 
+        {
+            return x;
+        }
         if(val > sn)
         {
             val -= sn;
@@ -157,20 +181,6 @@ void Insert(int pos, int val)
     Update(y), Update(x);
 }
 
-
-void Findmax()
-{
-    int x = root;
-    if(x)
-    {
-        while(tree[x].son[1])
-        {
-            x = tree[x].son[1];
-        }
-        Splay(x, 0);
-    }
-}
-
 void Delete(int pos)
 {
     int x = Findk(root, pos - 1), y = Findk(root, pos + 1);
@@ -181,8 +191,12 @@ void Delete(int pos)
 
 int Min(int l, int r)
 {
+    //cout << "testd" << endl; 
     int x = Findk(root, l - 1), y = Findk(root, r + 1);
+    //cout << "efuh" << endl;
     Splay(x, 0), Splay(y, x);
+    //cout << "eeee " << endl;
+    //cout << tree[tree[y].son[0]].minn;
     return tree[tree[y].son[0]].minn;
 }
 
@@ -243,45 +257,48 @@ void Revolve(int l, int r, int T)
 
 int main()
 {
-    cin >> n;
+    n = read();
     for(int i = 1; i <= n; i++)
     {
-        cin >> a[i];
+        a[i] = read();
     }
     init();
-    cin >> t;
-    while(t--)
+    int m;
+    m = read();
+    while(m--)
     {
         cin >> type;
-        if(type == "ADD")
+        if(type[0] == 'A')
         {
-            cin >> l >> r >> k;
+            l = read(), r = read(), k = read();
             Add(++l, ++r, k);
+            //print(root);
         }
-        if(type == "REVERSE")
+        if(type[3] == 'E')
         {
-            cin >> l >> r;
+            l = read(), r = read();
             Reverse(++l, ++r);
+            print(root);
         }
-        if(type == "REVOLVE")
+        if(type[3] == 'O')
         {
-            cin >> l >> r >> k;
+            l = read(), r = read(), k = read();
             Revolve(++l, ++r, k);
         }
-        if(type == "INSERT")
+        if(type[0] == 'I')
         {
-            cin >> q >> k;
+            q = read(), k = read();
             Insert(++q, k);
         }
-        if(type == "DELETE")
+        if(type[0] == 'D')
         {
-            cin >> k;
+            k = read();
             Delete(++k);
         }
-        if(type == "MIN")
+        if(type[0] == 'M')
         {
-            cin >> l >> r;
-            cout << Min(++l, ++r);
+            l = read(), r = read();
+            cout << Min(++l, ++r) << endl;
         }
     }
     return 0;

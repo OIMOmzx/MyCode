@@ -274,14 +274,6 @@ int main()
         int a, b;
         cin >> a >> b;
         Reverse(++a, ++b);
-        for(int i = 1; i <= n; i++)
-        {
-            Pushdown(i);
-        }
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        Pushdown(i);
     }
     print(root);
     return 0;
