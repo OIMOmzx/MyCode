@@ -2,13 +2,13 @@
 #include <algorithm>
 using namespace std;
 
-const int Max = 1000010;
+const long long Max = 1000010;
 struct node
 {
-    int a, b, m;
-    int num;
+    long long a, b, m;
+    long long num;
 }t[Max];
-int n, to[Max];
+long long n, to[Max];
 
 bool cmp(node x, node y)
 {
@@ -19,22 +19,22 @@ bool cmp(node x, node y)
 int main()
 {
     cin >> n;
-    for(int i = 1; i <= n; i++)
+    for(long long i = 1; i <= n; i++)
     {
         cin >> t[i].a;
     }
-    for(int i = 1; i <= n; i++)
+    for(long long i = 1; i <= n; i++)
     {
         cin >> t[i].b;
     }
-    for(int i = 1; i <= n; i++)
+    for(long long i = 1; i <= n; i++)
     {
         t[i].num = i;
         t[i].m = min(t[i].a, t[i].b);
     }
     sort(t + 1, t + n + 1, cmp);
-    int res1 = 0, res2 = n + 1;
-    for(int i = 1; i <= n; i++)
+    long long res1 = 0, res2 = n + 1;
+    for(long long i = 1; i <= n; i++)
     {
         if (t[i].m == t[i].a)
         {
@@ -47,8 +47,8 @@ int main()
             to[res2] = i;
         }
     }
-    int tmp = 0, ans = 0;
-    for(int i = 1; i <= n; i++)
+    long long tmp = 0, ans = 0;
+    for(long long i = 1; i <= n; i++)
     {
         tmp += t[to[i]].a;
         if(tmp > ans)
@@ -58,7 +58,7 @@ int main()
         }
     }
     cout << ans << endl;
-    for(int i = 1; i <= n; i++)
+    for(long long i = 1; i <= n; i++)
     {
         cout << t[to[i]].num << " ";
     }
