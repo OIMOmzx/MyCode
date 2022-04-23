@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstring>
 #include <cstdio>
+#include <vector>
 using namespace std;
 
 const int Max = 1000010;
@@ -19,6 +20,7 @@ int n, cnt, root, t;
 int a[Max];
 int q, l, r, k;
 char type[10];
+vector<int> res;
 
 inline int read()
 {
@@ -144,10 +146,8 @@ void print(int rt)
     {
         print(tree[rt].son[0]);
     }
-    if(tree[rt].val != inf && tree[rt].val != -inf)
-    {
-        cout << tree[rt].val << " ";
-    }
+    res.push_back(tree[rt].val);
+    cout << tree[rt].val << ", ";
     if(tree[rt].son[1]) 
     {
         print(tree[rt].son[1]);
@@ -260,29 +260,15 @@ void Revolve(int l, int r, int T)
 
 int main()
 {
-    n = read();
-    for(int i = 1; i <= n; i++)
+    for(int i = 1; i <= 3; i++)
     {
-        a[i] = i;
+        a[i] = read();
     }
-    //cout << a[1] << endl;
-    init();
-    int m;
-    m = read();
-    while(m--)
-    {
-        int a, b;
-        cin >> a >> b;
-        Reverse(++a, ++b);
-        for(int i = 1; i <= n; i++)
-        {
-            Pushdown(i);
-        }
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        Pushdown(i);
-    }
+    res.push_back(0);
     print(root);
+    cout << res[1] << res[2] << res[3];
+    if(res[1] == res[3]) printf("%s", "Equilateral triangle");
+    else if(res[1] == res[2] || res[2] == res[3]) printf("%s", "Isosceles triangle");
+    else printf("%s", "Ordinary triangle");
     return 0;
 }
