@@ -7,7 +7,7 @@ struct node
 {
     long long a, b, m;
     long long num;
-}t[Max];q q q q q q q
+}t[Max];
 long long n, to[Max];
 
 bool cmp(node x, node y)
