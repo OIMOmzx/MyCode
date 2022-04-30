@@ -1,66 +1,37 @@
 #include <iostream>
-#include <algorithm>
+#include <queue>
 using namespace std;
 
-const int Max = 1000010;
-struct node
-{
-    int a, b, m;
-    int num;
-}t[Max];
-int n, to[Max];
-
-bool cmp(node x, node y)
-{
-    if(x.m < y.m) return 1;
-    return 0;
-}
+int n;
+priority_queue<int> Q;
+priority_queue<int, vector<int>, greater<int> > q;
 
 int main()
 {
     cin >> n;
     for(int i = 1; i <= n; i++)
     {
-        cin >> t[i].a;
+        int k;
+        cin >> k;
+        Q.push(k);
+        q.push(k); 
     }
-    for(int i = 1; i <= n; i++)
+    int a = 0, b = 0;
+    for(int i = 1; i < n; i++)
     {
-        cin >> t[i].b;
+        a = Q.top();
+        Q.pop();
+        b = Q.top();
+        Q.pop();
+        b = a * b + 1;
+        Q.push(b);
+        a = q.top();
+        q.pop();
+        b = q.top();
+        q.pop();
+        b = a * b + 1;
+        q.push(b);
     }
-    for(int i = 1; i <= n; i++)
-    {
-        t[i].num = i;
-        t[i].m = min(t[i].a, t[i].b);
-    }
-    sort(t + 1, t + n + 1, cmp);
-    int res1 = 0, res2 = n + 1;
-    for(int i = 1; i <= n; i++)
-    {
-        if (t[i].m == t[i].a)
-        {
-            ++res1;
-            to[res1] = i;
-        } 
-        else 
-        {
-            --res2;
-            to[res2] = i;
-        }
-    }
-    int tmp = 0, ans = 0;
-    for(int i = 1; i <= n; i++)
-    {
-        tmp += t[to[i]].a;
-        if(tmp > ans)
-        {
-            ans = tmp;
-            ans += t[to[i]].b;
-        }
-    }
-    cout << ans << endl;
-    for(int i = 1; i <= n; i++)
-    {
-        cout << t[to[i]].num << " ";
-    }
+    cout << q.top() - Q.top() << endl;
     return 0;
 }
