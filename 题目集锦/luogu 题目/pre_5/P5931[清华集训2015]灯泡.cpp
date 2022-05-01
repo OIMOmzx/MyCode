@@ -2,8 +2,8 @@
 #include <iomanip>
 using namespace std;
 
-const int Max = 1000010;
-int n;
+const int Max = 10000010;
+long long n;
 double H, h, D;
 
 double ans(double x) 
@@ -18,14 +18,14 @@ int main()
     {
 		cin >> H >> h >> D;
 		double l = 0, r = Max;
-	    while(r - l >= 1e-12) 
+	    while(r - l >= 1e-7) 
         {
 		    double lmid = l + (r - l) / 3;
 		    double rmid = r - (r - l) / 3;
 		    if(ans(lmid) > ans(rmid)) r = rmid;
 		    else l = lmid;
 	    }
-	    cout << fixed << setprecision(3) << ans(l) << endl;
+	    cout << fixed << setprecision(3) << ans(l) + 1e-10 << endl;
 	}
 	return 0; 
 } 
