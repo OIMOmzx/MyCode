@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <cmath>
 #include <algorithm>
-#include <unistd.h>
 #define Max 1000010
 #define inf 0x3f3f3f3f
 using namespace std;
@@ -65,7 +64,6 @@ int main()
     {
         int mid = (l + r) >> 1;
         //cout << mid << ": " << endl;
-        usleep(100000);
         obj.init();
         for(int i = 1; i <= n; i++)
         {
