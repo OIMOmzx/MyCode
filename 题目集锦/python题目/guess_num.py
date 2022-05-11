@@ -1,7 +1,10 @@
-price = int(input())
+import random
+import string
+
 num = int(input())
 left = 1
 right = int(input())
+price = random.randint(left, right)
 cnt = 0
 
 while left < right:
