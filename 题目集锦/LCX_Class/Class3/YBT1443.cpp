@@ -1,4 +1,5 @@
 //吃了半个直径为 13.2cm 的黄色西瓜
+//tnnd，用了 42 分钟
 #include <iostream>
 #include <cstring>
 #define inf 54188
