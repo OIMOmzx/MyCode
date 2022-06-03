@@ -14,7 +14,7 @@ int dy[] = {0, 1, 2, 2, 1, -1, -2, -2, -1};
 
 struct node
 {
-    int x, y, step;
+    int x, y, step;q
 }now, nex, a, b;
 
 int bfs()
