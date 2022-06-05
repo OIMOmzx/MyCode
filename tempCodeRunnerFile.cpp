@@ -1,12 +1,23 @@
 #include <iostream>
-#include <cstring>
-#include <cmath>
-#define pi 3.1415926535897932384626
 using namespace std;
+
+int t, x, y;
 
 int main()
 {
-    cout << (2 * cos(10 * pi / 180) - sin(20 * pi / 180)) / cos(20 * pi / 180);
-    cout << 1.0 * sqrt(3.00);
+    cin >> t;
+    while(t--)
+    {
+        cin >> x;
+        for(int i = 1; i <= INT_MAX; i++)
+        {
+            //cout << (x & i) << ", " << (x xor i) << endl;
+            if((x & i) > 0 && (x xor i) > 0) 
+            {
+                cout << i << endl;
+                break;
+            }
+        }
+    }
     return 0;
 }
