@@ -1,9 +1,9 @@
 #include <iostream>
 #include <algorithm>
-#define Max 1000010
+#define Max 10000010
 using namespace std;
 
-int a[Max], n, sum, average, dp[Max];
+long long a[Max], n, sum, average, dp[Max];
 
 int main()
 {
@@ -19,11 +19,10 @@ int main()
         dp[i] = dp[i - 1] + a[i - 1] - average;
     }
     sort(dp + 1, dp + n + 1);
-    int mid = n / 2 + 1;
-    int ans = 0;
+    long long ans = 0;
     for(int i = 1; i <= n; i++)
     {
-        ans += abs(dp[i] - dp[mid]);
+        ans += abs(dp[i] - dp[(n + 1) / 2]);
     }
     cout << ans << endl;
     return 0;
