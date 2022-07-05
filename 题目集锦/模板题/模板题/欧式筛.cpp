@@ -1,7 +1,10 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
-int prime[1000010];
-bool vis[1000010];
+
+const int Max = 10000010;
+int prime[Max];
+bool vis[Max];
+
 int main()
 {
     int n, cnt = 0;
