@@ -25,7 +25,7 @@ int main()
                     s2 += "0 1 ";
                 }
             }
-            cout << s1 << endl << s2;
+            cout << s1 << endl << s2 << endl;
         }
         else if(y == 2)
         {
