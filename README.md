@@ -20,13 +20,14 @@
 好像没了？？
 
 ### PART 2 关于我
-建议百度搜索“OIMOmzx”，同时欢迎叫我 mezation（确信），缩写：mezt.，形容词性（mzx 创造的）：mezaty。***千万*** 不要！叫我 Mezition, mezAtion, Maozation, MaozAtion...千奇百怪的名称。
+建议百度搜索“OIMOmzx”，同时欢迎叫我 MeZaTion（确信），缩写：mezt.，形容词性（mzx 创造的）：mezaty。***千万*** 不要！叫我 Mezition, mezAtion, Maozation, MaozAtion...千奇百怪的名称。
 
-说白了，菜死了，弱爆了，被虐翻是家常便饭。尤其是文化课，常年位居年级倒数，且成绩稳定，~~经常位列倒数第 413~~ 我们年级不再是 413 人了. OI 更弱，不信去问 [lcx 老师](https://www.luogu.com.cn/user/338284)
+说白了，菜死了，弱爆了，被虐翻是家常便饭。尤其是文化课，稳居被虐翻的前列. OI 更弱，不信去问 [lcx 老师](https://www.luogu.com.cn/user/338284)
 
 目前在双修，主要是 MOer, 副业是 OIer。
 
 ~~双休路是很窄的，不要想万奕轩 by 汪师林老师~~
+
 目前在双修，主要是 MOer, 副业是 OIer。
 
 膜拜和我一起学 OI 的 [⚡牛逼的蒟蒻
@@ -51,6 +52,8 @@
 3. 2021 年 CSP-J 71, CSP-S 37.5。
 
 4. CSP-J2021 192pts, rk36
+
+5. 高联的预赛还行，没有进入决赛
 
 ### PART 4 我的账号
 
