@@ -25,6 +25,7 @@ int main()
             {
                 if(cnt == 3)
                 {
+                    //cout << "i" << i << ", ";
                     res++;
                     cnt = 0;
                     memset(a, 0, sizeof(a));
@@ -32,9 +33,10 @@ int main()
                 cnt++;
                 a[s[i] - 'a' + 1] = 1;
             }
-            //cout << cnt << ", ";
+            //cout << cnt << ", " <<  res << endl;
         }
         cout << res + 1 << endl;
+        cnt = 0, res = 0, memset(a, 0, sizeof(a));
     }
     return 0;
 }
