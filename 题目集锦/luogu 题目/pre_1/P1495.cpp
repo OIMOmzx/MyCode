@@ -41,7 +41,7 @@ int main()
         scanf("%lld%lld", &a[i], &b[i]);
         m *= a[i];
     }
-    cout << m << endl;
+    //cout << m << endl;
     printf("%lld\n", CRT());
     return 0;
 }
