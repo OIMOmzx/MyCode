@@ -52,16 +52,14 @@ int main()
         {
             break;
         }
-        /*
         else if(b[1] == 0 && b[2] == 0 && b[3] == 0)
         {
             printf("Case %lld: the next triple peak occurs in %lld days.\n", cnt, (m - d));
         }
-        */
         else
         {
-            if(CRT() - d == 21252) printf("Case %lld: the next triple peak occurs in %lld days.\n", cnt, CRT() - d);
-            if(CRT() - d != 21252) printf("Case %lld: the next triple peak occurs in %lld days.\n", cnt, (CRT() - d) % m);
+            if(CRT() - d == 0) printf("Case %lld: the next triple peak occurs in %lld days.\n", cnt, 21252);
+            else printf("Case %lld: the next triple peak occurs in %lld days.\n", cnt, (CRT() - d + m) % m);
         }
     }
     return 0;
