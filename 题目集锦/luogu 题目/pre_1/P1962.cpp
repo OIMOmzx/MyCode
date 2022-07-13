@@ -16,11 +16,11 @@ struct node
 node mul(node x, node y)
 {
     node ans;
-    for(long long i = 1; i <= 3; i++)
+    for(long long i = 1; i <= 2; i++)
     {
-        for(long long j = 1; j <= 3; j++)
+        for(long long j = 1; j <= 2; j++)
         {
-            for(long long k = 1; k <= 3; k++)
+            for(long long k = 1; k <= 2; k++)
             {
                 ans.a[i][j] = (ans.a[i][j] + x.a[i][k] * y.a[k][j]) % m;
             }
@@ -31,12 +31,11 @@ node mul(node x, node y)
 
 long long quickpow(long long k)
 {
-    node ans, base;
-    for(int i = 1; i <= 3; i++)
-    {
-        ans.a[i][i] = 1;
-    }
-    base.a[1][1] = 1, base.a[1][2] = 1, base.a[2][2] = 1, base.a[2][3] = 1, base.a[3][2] = 1;
+    node base, ans;
+    ans.a[1][1] = 1, ans.a[1][2] = 1, ans.a[2][1] = 1;
+    ans.a[2][2] = 0;
+    base.a[1][1] = 1, base.a[1][2] = 1, base.a[2][1] = 1;
+    base.a[2][2] = 0;
     while(k > 0)
     {
         if(k & 1)
@@ -46,12 +45,14 @@ long long quickpow(long long k)
         base = mul(base, base);
         k >>= 1;
     }
-    return ans.a[1][1] + ans.a[1][2] + ans.a[1][3] % m;
+    return ans.a[1][1] % m;
 }
 
 int main()
 {
-    scanf("%lld%lld", &n, &m);
-    printf("%lld\n", quickpow(n - 1) % m);
+    scanf("%lld", &n);
+    m = 1e9 + 7;
+    if(n == 1 || n == 2) printf("1\n");
+    else printf("%lld\n", quickpow(n - 2) % m);
     return 0;
 }
