@@ -2,7 +2,7 @@
 #include <cstring>
 using namespace std;
 
-long long n, m = 1e4;
+long long n, m;
 
 struct node
 {
@@ -50,12 +50,8 @@ long long quickpow(long long k)
 
 int main()
 {
-    while(scanf("%lld", &n))
-    {
-        if(n == -1) break;
-        if(n == 0) printf("0\n");
-        else if(n == 1 || n == 2) printf("1\n");
-        
-    }
+    scanf("%lld%lld", &n, &m);
+    if(n == 1 || n == 2) printf("1\n");
+    else printf("%lld\n", quickpow(n - 2) % m);
     return 0;
 }
