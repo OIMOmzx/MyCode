@@ -38,7 +38,7 @@ int main()
     {
         for(int j = 1; j <= p; j++)
         {
-            printf("%lld", ans[i][j]);
+            printf("%lld ", ans[i][j]);
         }
         printf("\n");
     }
