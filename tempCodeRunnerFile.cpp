@@ -1,57 +1,45 @@
+/*
+(ax + by)(ax + by)....(ax + by)
+C(k, n) * (a ^ n) * (b ^ m)
+*/
 #include <iostream>
-#include <cstring>
+#include <cstdio>
 using namespace std;
 
-long long n, m;
+const long long  Max = 1010;
+const long long  mod = 10007;
+long long dp[Max][Max];
 
-struct node
+long long quickpow(long long base, long long time)
 {
-    long long a[20][20];
-    node()
-    {
-        memset(a, 0, sizeof(a));
-    }
-};
-
-node mul(node x, node y)
-{
-    node ans;
-    for(long long i = 1; i <= 3; i++)
-    {
-        for(long long j = 1; j <= 3; j++)
-        {
-            for(long long k = 1; k <= 3; k++)
-            {
-                ans.a[i][j] = (ans.a[i][j] + x.a[i][k] * y.a[k][j]) % m;
-            }
-        }
-    }
-    return ans;
+	long long sum = 1, res = base;
+	while(time > 0)
+	{
+		if(time & 1)
+		{
+            sum *= res;
+            sum %= mod;
+		}
+		time >>= 1;
+		res *= res;
+        res %= mod;
+	} 
+	return sum;
 }
 
-long long quickpow(long long k)
-{
-    node ans, base;
-    for(int i = 1; i <= 3; i++)
-    {
-        ans.a[i][i] = 1;
-    }
-    base.a[1][1] = 1, base.a[1][2] = 1, base.a[2][2] = 1, base.a[2][3] = 1, base.a[3][2] = 1;
-    while(k > 0)
-    {
-        if(k & 1)
-        {
-            ans = mul(ans, base);
-        }
-        base = mul(base, base);
-        k >>= 1;
-    }
-    return ans.a[1][1] + ans.a[1][2] + ans.a[1][3] % m;
-}
+long long a, b, k, m, n;
 
 int main()
 {
-    scanf("%lld%lld", &n, &m);
-    printf("%lld\n", quickpow(n - 1) % m);
+    scanf("%lld%lld%lld%lld%lld", &a, &b, &k, &n, &m);
+    dp[1][1] = 1;
+    for(long long i = 2; i <= k + 1; i++)
+    {
+        for(long long j = 1; j <= i; j++)
+        {
+            dp[i][j] = (dp[i - 1][j] % mod + dp[i - 1][j - 1] % mod) % mod;
+        }
+    }
+    printf("%lld\n", dp[k + 1][k - n + 1] % mod * quickpow(a, n) % mod * quickpow(b, m) % mod);
     return 0;
 }
