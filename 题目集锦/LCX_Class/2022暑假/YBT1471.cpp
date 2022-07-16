@@ -4,10 +4,10 @@
 #include <cstdio>
 using namespace std;
 
-const int Max = 1000010;
+const int Max = 100010;
 int t, n;
 string s;
-int trie[Max][27], res = 0;
+int trie[Max][11], res = 0;
 bool last[Max];
 int ans = 0;
 bool f = 0, flag = 0;
@@ -17,7 +17,7 @@ bool insert(string s)
     int len = s.length(), p = 0;
     for(int i = 0; i < len; i++)
     {
-        int ch = s[i] - '0';
+        int ch = s[i] - '0' + 1;
         if(trie[p][ch] == 0)
         {
             trie[p][ch] = ++res;
