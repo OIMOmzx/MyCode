@@ -32,8 +32,7 @@ int main()
                 d = max(d, y[i]);
             }
         }
-        
-        cout << a << ", " << b << ", " << c << ", " << d << endl;
+        //cout << a << ", " << b << ", " << c << ", " << d << endl;
         cout << (abs(a) + abs(b) + abs(c) + abs(d)) * 2 << endl;
     }
     return 0;

@@ -1,57 +1,33 @@
 #include <iostream>
 using namespace std;
 
-const int Max = 100010;
-int t, n;
-int ans[Max], sq[Max], ne[Max];
-
-void create(int n)
-{
-    if(n == 0) return;
-    int top = sq[ne[n - 1]];
-    int last = top - n;
-    for(int i = n - 1; i >= top - n; i--)
-    {
-        //cout << i << " " << n << ", " << top << ", ";
-        ans[top - i] = i;
-    }
-    if(last < 0) return;
-    create(last);
-    //cout << last << ", " << endl;
-}
-
 int main()
 {
-    cin >> t;
-    for(int i = 0; i * i <= Max; i++)
+    cout << (0 ^ 61 ^ 0 ^ 62) << endl;
+    /*
+    for(int i = 1; i <= 10; i++)
     {
-        sq[i] = i * i;
-        if(i == 0) ne[0] = 0;
-        else
+        bool flag = 0;
+        int k = i * 10 + 1;
+        for(int j1 = 0; j1 <= k; j1++)
         {
-            for(int j = sq[i - 1] + 1; j <= sq[i]; j++)
+            for(int j2 = 0; j2 <= k; j2++)
             {
-                ne[j] = i;
+                for(int j3 = 0; j3 <= k; j3++)
+                {
+                   if((j1 ^ j2 ^ j3) == 0 && j1 + j2 + j3 == k)
+                   {
+                        cout << j1 << " " << j2 << " " << j3 << endl;
+                        flag = 1;
+                        break;
+                   }
+                }
+                if(flag) break;
             }
+            if(flag) break;
         }
+        if(!flag) cout << "3jnfqjd" << endl;
     }
-    while(t--)
-    {
-        cin >> n;
-        if(n == 1) cout << "0" << endl;
-        else if(n == 2) cout << "1 0" << endl;
-        else if(n == 3) cout << "1 0 2" << endl;
-        else if(n == 4) cout << "0 3 2 1" << endl;
-        else
-        {
-            create(n);
-            ans[1] += 1, ans[2] += 1;
-            for(int i = 1; i <= n; i++)
-            {
-                cout << ans[i] << " ";
-            }
-            cout << endl;
-        }
-    }
+    */
     return 0;
 }
