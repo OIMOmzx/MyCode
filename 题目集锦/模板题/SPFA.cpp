@@ -46,7 +46,6 @@ bool spfa(int u)
                 {
                     if(++sum[v] >= n)
                     {
-                        cout << "asdfghhjkl" << endl;
                         return true;
                     }
                     vis[v] = 1;
