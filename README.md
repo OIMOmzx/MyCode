@@ -2,6 +2,7 @@
 0. 2022.2.14 创建
 1. 2022.2.15 GitHub 内容完善
 2. 2022.7.10 修改部分内容
+3. 2022.8.16 精简内容的表述，修改了一些文字幼稚、不成熟的地方。
 
 ### PART 0 广告位
 [CSDN食用更佳](https://blog.csdn.net/OIMOmzx/article/details/120071233)
@@ -21,9 +22,9 @@
 好像没了？？
 
 ### PART 2 关于我
-建议百度搜索“OIMOmzx”，同时欢迎叫我 MeZaTion（确信），缩写：mezt.，形容词性（mzx 创造的）：mezaty。***千万*** 不要！叫我 Mezition, mezAtion, Maozation, MaozAtion...千奇百怪的名称。
+不建议百度搜索“OIMOmzx”，同时欢迎叫我 MeZaTion（确信），缩写：mezt.，形容词性（mzx 创造的）：mezaty。***千万*** 不要！叫我 Mezition, mezAtion, Maozation, MaozAtion...千奇百怪的名称。
 
-说白了，菜死了，弱爆了，被虐翻是家常便饭。尤其是文化课，稳居被虐翻的前列. OI 更弱，不信去问 [lcx 老师](https://www.luogu.com.cn/user/338284)
+说白了，菜死了，弱爆了，被虐翻是家常便饭。尤其是文化课，稳居被虐翻的前列. OI 更弱，不可以去问 [lcx 老师](https://www.luogu.com.cn/user/338284)
 
 目前在双修，主要是 MOer, 副业是 OIer。
 
@@ -32,33 +33,29 @@
 目前在双修，主要是 MOer, 副业是 OIer。
 
 膜拜和我一起学 OI 的 [⚡牛逼的蒟蒻
-](https://www.luogu.com.cn/user/299817) and [AFOed, 吴瑞泽](https://www.luogu.com.cn/user/379902) and [zjx](https://www.luogu.com.cn/user/319620) and [球球](https://www.luogu.com.cn/user/511250)
+](https://www.luogu.com.cn/user/299817) and [AFOed, 吴瑞泽](https://www.luogu.com.cn/user/379902) and [大概 AFOed，zjx](https://www.luogu.com.cn/user/319620) and [球球](https://www.luogu.com.cn/user/511250)
 
-外校~~友商~~：[Sparkle_ZH](https://www.luogu.com.cn/user/265517), [hhdxgd](https://www.luogu.com.cn/user/438544), [NTZ小粉](https://www.luogu.com.cn/user/397282)
+外校：[Sparkle_ZH](https://www.luogu.com.cn/user/265517), [hhdxgd](https://www.luogu.com.cn/user/438544), [NTZ小粉](https://www.luogu.com.cn/user/397282)
 
-真名：mzx，~~都知道，也没什么好说~~。是个男 OIer，之前某 [ZJ OIer](https://www.luogu.com.cn/user/526896) 认为我是一位女生，有些离谱。记住，OIMOmzx + 蓝色头像的我是一位男生。并且是一位人输，不像我的同学们，各个是人赢。
+真名：mzx，~~都知道，也没什么好说~~。是个男 OIer。
 
 目前计划在一年半到两年之内 AFO，持续 AFO，间歇 AFO。
 
 果然呢，一点名气也没有，说完了。当然还会长期更新。
 
-
 2021.9.1 0:00正式成为 czs，在某弱省的强校就读。
 
-### PART 3 成就
+### PART 3 学习记录
 1. 数据删除
 
-2. 2020 年 CSP-J 52.5；
+2. 2020 年 CSP-J 52.5（第一轮）
 
-3. 2021 年 CSP-J 71, CSP-S 37.5。
+3. 2021 年 CSP-J 71, CSP-S 37.5（第一轮）
 
 4. CSP-J2021 192pts, rk36
 
-5. 高联的预赛还行，没有进入决赛
 
 ### PART 4 我的账号
-
-话说，我 12.30 才发现，我 USACO 学校填的是 jk??
 
 ### 1. luogu : [OIMOmzx](https://www.luogu.com.cn/user/414308)
 
@@ -69,7 +66,7 @@
 ### 4. HDU : [handsomemzx](https://acm.dingbacode.com/userstatus.php?user=handsomemzx)
  注：上面两个国产OJ不让用下划线。
  
-### 5. CodeForces（lg remote judge 写过） : [OIMOmzx](https://codeforces.com/profile/OIMOmzx)
+### 5. CodeForces: [OIMOmzx](https://codeforces.com/profile/OIMOmzx)
 
 ### 6. Sphere OJ : 无
 
