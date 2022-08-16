@@ -1,15 +1,12 @@
 #include <iostream>
 #include <cstring>
 #include <queue>
-#include <algorithm>
+#include <climits>
 using namespace std;
 
-const int maxn = 10010, Max = 100010;
-int n, m;
-int u, v, w;
-int cnt;
-int s, t;
-int head[maxn], dis[maxn], sum[maxn];
+const int maxn = 1010, Max = 1000010;
+int t, n, m, w, u, v, p, cnt;
+int head[maxn], dis[Max], sum[Max];
 bool vis[maxn];
 
 struct node
@@ -27,27 +24,26 @@ void add(int u, int v, int w)
 
 bool spfa(int u)
 {
-    memset(dis, 0x3f, sizeof(dis));
-    memset(vis, 0, sizeof(vis));
     memset(sum, 0, sizeof(sum));
+    memset(vis, 0, sizeof(vis));
+    memset(dis, 0x3f, sizeof(dis));
 
     queue<int> q;
-    dis[u] = 0, vis[u] = 1, sum[u]++;
+    sum[u]++, vis[u] = 1, dis[u] = 0;
     q.push(u);
-
+    
     while(!q.empty())
     {
         int x = q.front();
         q.pop();
         vis[x] = 0;
-
         for(int i = head[x]; i != -1; i = e[i].next)
         {
             int v = e[i].to;
             if(dis[v] > dis[x] + e[i].val)
             {
                 dis[v] = dis[x] + e[i].val;
-                if(vis[v] == 0)
+                if(!vis[v])
                 {
                     if(++sum[v] >= n)
                     {
@@ -59,23 +55,29 @@ bool spfa(int u)
             }
         }
     }
-    return 0;
+    return false;
 }
 
 int main()
 {
-    memset(head, -1, sizeof(head));
-    cin >> n >> m >> s >> t;
-    for(int i = 1; i <= m; i++)
+    cin >> t;
+    while(t--)
     {
-        cin >> u >> v >> w;
-        add(u, v, w);
-        add(v, u, w);
-    }
-    if(spfa(s)) cout << "-1" << endl;
-    else
-    {
-        cout << dis[t] << endl;
+        memset(head, -1, sizeof(head));
+        cin >> n >> m >> w;
+        for(int i = 1; i <= m; i++)
+        {
+            cin >> u >> v >> p;
+            add(u, v, p);
+            add(v, u, p);
+        }
+        for(int i = 1; i <= w; i++)
+        {
+            cin >> u >> v >> p;
+            add(u, v, -p);
+        }
+        if(spfa(1)) cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
     return 0;
 }

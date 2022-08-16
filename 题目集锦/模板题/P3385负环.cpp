@@ -1,14 +1,11 @@
 #include <iostream>
 #include <cstring>
 #include <queue>
-#include <algorithm>
 using namespace std;
 
-const int maxn = 10010, Max = 100010;
-int n, m;
-int u, v, w;
+const int maxn = 20010, Max = 100010;
+int t, n, m, u, v, w;
 int cnt;
-int s, t;
 int head[maxn], dis[maxn], sum[maxn];
 bool vis[maxn];
 
@@ -28,11 +25,11 @@ void add(int u, int v, int w)
 bool spfa(int u)
 {
     memset(dis, 0x3f, sizeof(dis));
-    memset(vis, 0, sizeof(vis));
     memset(sum, 0, sizeof(sum));
+    memset(vis, 0, sizeof(vis));
 
     queue<int> q;
-    dis[u] = 0, vis[u] = 1, sum[u]++;
+    dis[u] = 0, sum[u]++, vis[u] = 1;
     q.push(u);
 
     while(!q.empty())
@@ -47,7 +44,7 @@ bool spfa(int u)
             if(dis[v] > dis[x] + e[i].val)
             {
                 dis[v] = dis[x] + e[i].val;
-                if(vis[v] == 0)
+                if(!vis[v])
                 {
                     if(++sum[v] >= n)
                     {
@@ -59,23 +56,25 @@ bool spfa(int u)
             }
         }
     }
-    return 0;
+    return false;
 }
 
 int main()
 {
-    memset(head, -1, sizeof(head));
-    cin >> n >> m >> s >> t;
-    for(int i = 1; i <= m; i++)
+    cin >> t;
+    while(t--)
     {
-        cin >> u >> v >> w;
-        add(u, v, w);
-        add(v, u, w);
-    }
-    if(spfa(s)) cout << "-1" << endl;
-    else
-    {
-        cout << dis[t] << endl;
+        memset(head, -1, sizeof(head));
+        cin >> n >> m;
+        for(int i = 1; i <= m; i++)
+        {
+            cin >> u >> v >> w;
+            add(u, v, w);
+            if(w >= 0) add(v, u, w);
+        }
+        //cout << 'w' << endl;
+        if(spfa(1)) cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
     return 0;
 }

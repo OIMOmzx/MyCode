@@ -4,11 +4,10 @@
 #include <algorithm>
 using namespace std;
 
-const int maxn = 10010, Max = 100010;
+const int maxn = 2010, Max = 20010;
 int n, m;
 int u, v, w;
 int cnt;
-int s, t;
 int head[maxn], dis[maxn], sum[maxn];
 bool vis[maxn];
 
@@ -65,17 +64,18 @@ bool spfa(int u)
 int main()
 {
     memset(head, -1, sizeof(head));
-    cin >> n >> m >> s >> t;
+    cin >> n >> m;
     for(int i = 1; i <= m; i++)
     {
         cin >> u >> v >> w;
-        add(u, v, w);
-        add(v, u, w);
+        add(u, v, -w);
     }
-    if(spfa(s)) cout << "-1" << endl;
+    if(spfa(1)) cout << "Forever love" << endl;
     else
     {
-        cout << dis[t] << endl;
+        int ans = dis[n];
+        spfa(n);
+        cout << min(ans, dis[1]) << endl;
     }
     return 0;
 }
