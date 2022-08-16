@@ -1,13 +1,15 @@
 #include <iostream>
 #include <cstring>
 #include <queue>
+#include <cstdio>
 using namespace std;
 
-const long long maxn = 10010, Max = 1000010;
+const long long maxn = 10010, Max = 100010;
 long long n, m, s;
 long long u, v, w;
 long long cnt;
 long long head[maxn], sum[maxn], dis[maxn];
+long long exsit[maxn];
 bool vis[maxn];
 
 struct node
@@ -30,7 +32,7 @@ bool spfa(long long u)
     memset(sum, 0, sizeof(sum));
 
     queue<long long> q;
-    dis[u] = 0, vis[u] = 1, sum[u]++;
+    dis[u] = 0, vis[u] = 1, sum[u]++, exsit[u] = 1;
     q.push(u);
 
     while(!q.empty())
@@ -48,8 +50,10 @@ bool spfa(long long u)
                 {
                     if(++sum[v] >= n)
                     {
+                        cout << "-1" << endl;
                         return true;
                     }
+                    exsit[u] = 1;
                     vis[v] = 1;
                     q.push(v);
                 }
@@ -65,10 +69,17 @@ int main()
     cin >> n >> m >> s;
     for(long long i = 1; i <= m; i++)
     {
-        cin >> u >> v >> w;
+        scanf("%lld%lld%lld", &u, &v, &w);
         add(u, v, w);
     }
-    if(spfa(s)) cout << "-1" << endl;
+    for(int i = 1; i <= n; i++)
+    {
+        if(!exsit[i]) 
+        {
+            if(spfa(i)) return 0;
+        }
+    }
+    if(spfa(s)) return 0;
     else
     {
         for(long long i = 1; i <= n; i++)
@@ -76,8 +87,8 @@ int main()
             if(i == s) cout << "0" << endl;
             else
             {
-                if(dis[i] == 0x3f3f3f3f) cout << "NoPath" << endl;
-                else cout << dis[i] << endl;
+                if(dis[i] == 0x3f3f3f3f3f3f3f3f) cout << "NoPath" << endl;
+                else printf("%lld\n", dis[i]);
             }
         }
     }
