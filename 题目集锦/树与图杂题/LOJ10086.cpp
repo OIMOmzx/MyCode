@@ -61,35 +61,3 @@ bool spfa(long long u)
     }
     return false;
 }
-
-int main()
-{
-    memset(head, -1, sizeof(head));
-    cin >> n >> m >> s;
-    for(long long i = 1; i <= m; i++)
-    {
-        cin >> u >> v >> w;
-        add(u, v, w);
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        if(!exsit[i]) 
-        {
-            if(spfa(i)) return 0;
-        }
-    }
-    if(spfa(s)) return 0;
-    else
-    {
-        for(long long i = 1; i <= n; i++)
-        {
-            if(i == s) cout << "0" << endl;
-            else
-            {
-                if(dis[i] == 0x3f3f3f3f3f3f3f3f) cout << "NoPath" << endl;
-                else cout << dis[i] << endl;
-            }
-        }
-    }
-    return 0;
-}

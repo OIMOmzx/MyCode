@@ -6,10 +6,9 @@ using namespace std;
 
 const long long maxn = 10010, Max = 10010;
 const long long inf = 0x3f3f3f3f;
-long long n, m, s, t, num, open_num, need;
+long long n, m, s, t, u, v, w;
 long long cnt = 0;
 long long head[maxn], d[maxn];
-int vis[maxn], last[maxn], pig[maxn];
 struct node
 {
     long long from, to, next, val;
@@ -84,35 +83,12 @@ long long dinic(long long s, long long t)
 int main()
 {
     memset(head, -1, sizeof(head));
-    cin >> m >> n;
-    for(int i = 1; i <= m; i++)
+    cin >> n >> m >> s >> t;
+    for(long long i = 1; i <= m; i++)
     {
-        cin >> pig[i];
-    }
-    s = 0, t = n + 1;
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> num;
-        for(int j = 1; j <= num; j++)
-        {
-            cin >> open_num;
-            if(vis[open_num] == 0)
-            {
-                add(s, i, pig[open_num]);
-                add(i, s, 0);
-                vis[open_num]++;
-                last[open_num] = i;
-            }
-            else if(vis[open_num] == 1)
-            {
-                add(last[open_num], i, 0x3f3f3f3f);
-                add(i, last[open_num], 0);
-            }
-            else continue;
-        }
-        cin >> need;
-        add(i, t, need);
-        add(t, i, 0);
+        cin >> u >> v >> w;
+        add(u, v, w);
+        add(v, u, 0);
     }
     cout << dinic(s, t) << endl;
     return 0;
