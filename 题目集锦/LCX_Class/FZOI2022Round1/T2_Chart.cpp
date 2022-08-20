@@ -10,6 +10,8 @@ int ans0, cnt0, ans1, cnt1;
 
 int main()
 {
+    freopen("2.in", "r", stdin);
+    freopen("2.out", "w", stdout);
     cin >> n >> m;
     cin >> (s + 1);
     for(int i = 1; i <= n; i++)
