@@ -2,13 +2,15 @@
 #include <queue>
 #include <cstring>
 #include <algorithm>
+#include <cstdio>
+#include <vector>
 using namespace std;
 
-const int maxn = 10010, Max = 10010;
+const int maxn = 1010, Max = 100010;
 const int inf = 0x3f3f3f3f;
-int n, m, s, t, u, v, w;
+int T, n, m, s, t, u, v, w, num;
 int cnt = 0;
-int head[maxn], d[maxn];
+int head[maxn], d[maxn], crime[maxn];
 struct node
 {
     int from, to, next, val;
@@ -21,11 +23,11 @@ void add(int u, int v, int w)
     e[cnt].to = v;
     e[cnt].next = head[u];
     e[cnt].flow = 0;
-    e[cnt].cap += w;
+    e[cnt].cap = w;
     head[u] = cnt++;
 }
 
-bool bfs(int s, int t)//分层
+bool bfs(int s, int t)
 {
     memset(d, 0, sizeof(d));
     queue<int> q;
@@ -51,7 +53,7 @@ bool bfs(int s, int t)//分层
     return 0;
 }
 
-int dfs(int u, int flow, int t)//增广
+int dfs(int u, int flow, int t)
 {
     if(u == t) return flow;
     int rest = flow;
@@ -82,14 +84,27 @@ int dinic(int s, int t)
 
 int main()
 {
-    memset(head, -1, sizeof(head));
-    cin >> n >> m >> s >> t;
-    for(int i = 1; i <= m; i++)
+    cin >> T;
+    while(T--)
     {
-        cin >> u >> v >> w;
-        add(u, v, w);
-        add(v, u, 0);
+        memset(head, -1, sizeof(head));
+        cnt = 0;
+        
+        cin >> n >> m >> s >> t;
+        for(int i = 1; i <= n; i++)
+        {
+            cin >> crime[i];
+            add(i, i + n, crime[i]);
+            add(i + n, i, 0);
+        }
+        for(int i = 1; i <= m; i++)
+        {
+            cin >> u >> v;
+            add(u, v + n, 0);
+            add(v + n, u, inf);
+            add(v, u + n, 0);
+            add(u + n, v, inf);
+        }
+        cout << dinic(s + n, t) << endl;
     }
-    cout << dinic(s, t) << endl;
-    return 0;
 }
