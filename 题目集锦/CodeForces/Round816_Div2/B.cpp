@@ -20,7 +20,7 @@ int main()
         {
             long long maxn = n - 1 + (s - (n - 1) * k) / k;
             if(maxn < b) cout << "-1" << endl;
-            else if(k * b + n * k < s) cout << "-1" << endl;
+            else if(k * b + n * (k - 1) < s) cout << "-1" << endl;
             else
             {
                 long long ans[100010];

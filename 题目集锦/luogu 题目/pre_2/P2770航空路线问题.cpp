@@ -96,7 +96,7 @@ void print(int s, int t)
     for(int i = head[s]; i != -1; i = e[i].next)
     {
         v = e[i].to;
-        if(!vis[v] && ((e[i].flow > 0 && e[i].cost <= 0) || e[i].flow < 0 && e[i].cost >= 0))
+        if(!vis[v] && ((e[i].flow > 0 && e[i].cost <= 0) || (e[i].flow < 0 && e[i].cost >= 0))
         {
             print(v, t);
             if(v <= t) cout << ans[v - 1] << endl;
@@ -143,7 +143,8 @@ int main()
         cout << ans[0] << endl;
         memset(vis, 0, sizeof(vis));
         print(1, n);
+        cout << ans[0] << endl;
     }
-    else cout << "No Solution" << endl;
+    else cout << "No Solution!" << endl;
     return 0;
 }
