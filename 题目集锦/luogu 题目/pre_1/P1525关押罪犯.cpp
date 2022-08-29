@@ -83,8 +83,8 @@ bool check(int midn)
 
 int main()
 {
-    freopen("123456.in", "r", stdin);
-    freopen("123456.out", "w", stdout);
+    //freopen("123456.in", "r", stdin);
+    //freopen("123456.out", "w", stdout);
     int l = 0, r = -0x3f3f3f3f, mid = (l + r) / 2;
     init();
 
@@ -99,12 +99,12 @@ int main()
     sort(t + 1, t + m + 1, cmp);
     //cout << r << endl;
     r = INT_MAX;
-    while(l <= r)
+    while(l < r)
     {
         mid = (l + r) / 2;
-        if(check(mid)) r = mid - 1;
+        if(check(mid)) r = mid;
         else l = mid + 1;
     }
-    cout << mid << endl;
+    cout << l << endl;
     return 0;
 }
