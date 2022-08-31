@@ -4,7 +4,7 @@ using namespace std;
 const int Max = 1000010;
 const int inf = 0x3f3f3f3f;
 int match[Max], visx[Max], visy[Max], lx[Max], ly[Max];
-int n, m, cnt = 0;
+int n, m, cnt = 0, slack[Max];
 int w[1010][1010];
 
 /*
@@ -36,6 +36,10 @@ bool dfs(int u)
                 match[i] = u;
                 return 1;
             }
+        }
+        else if(slack[y] > t)
+        {
+            slack[y] = t;
         }
     }
     return 0;
