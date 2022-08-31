@@ -29,7 +29,8 @@ bool dfs(int u)
     visx[u] = 1;
     for(int i = 1; i <= n; i++)
     {
-        if(!visy[i] && lx[u] + ly[i] == w[u][i])
+        int t = lx[u] + ly[i] - w[u][i];
+        if(!visy[i] && t == 0)
         {
             visy[i] = 1;
             if(match[i] == 0 || dfs(match[i]))
@@ -38,9 +39,9 @@ bool dfs(int u)
                 return 1;
             }
         }
-        else if(slack[i] > u)
+        else if(slack[i] > t)
         {
-            slack[i] = u;
+            slack[i] = t;
         }
     }
     return 0;
