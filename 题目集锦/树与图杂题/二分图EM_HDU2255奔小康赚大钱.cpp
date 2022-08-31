@@ -26,20 +26,20 @@ void add(int u, int v, int w)
 bool dfs(int u)
 {
     visx[u] = 1;
-    for(int i = 1; i <= m; i++)
+    for(int i = 1; i <= n; i++)
     {
         if(!visy[i] && lx[u] + ly[i] == w[u][i])
         {
             visy[i] = 1;
-            if(match[i] == -1 || dfs(match[i]))
+            if(match[i] == 0 || dfs(match[i]))
             {
                 match[i] = u;
                 return 1;
             }
         }
-        else if(slack[y] > t)
+        else if(slack[i] > u)
         {
-            slack[y] = t;
+            slack[i] = u;
         }
     }
     return 0;
@@ -47,12 +47,27 @@ bool dfs(int u)
 
 int KM()
 {
-    int sum = 0;
+    memset(lx, 0, sizeof(lx));
     memset(ly, 0, sizeof(ly));
-    memset(match, -1, sizeof(match));
+    memset(match, 0, sizeof(match));
 
     for(int i = 1; i <= n; i++)
     {
+        for(int j = 1; j <= n; j++)
+        {
+            if(lx[i] < w[i][j])
+            {
+                lx[i] = w[i][j];
+            }
+        }
+    }
+
+    for(int i = 1; i <= n; i++)
+    {
+        for(int j = 1; j <= n; j++)
+        {
+            slack[j] = inf;
+        }
         while(1)
         {
             memset(visx, 0, sizeof(visx));
@@ -65,30 +80,17 @@ int KM()
             int d = inf;
             for(int j = 1; j <= n; j++)
             {
-                if(visx[j])
+                if(!visy[j] && d > slack[j])
                 {
-                    for(int k = 1; k <= m; k++)
-                    {
-                        if(!visy[k])
-                        {
-                            d = min(d, lx[j] + ly[k] - w[j][k]);
-                        }
-                    }
+                    d = slack[j];
                 }
-            }
-            if(d == inf)
-            {
-                return -1;
             }
             for(int j = 1; j <= n; j++)
             {
                 if(visx[j])
                 {
-                    lx[j] += d;
+                    lx[j] -= d;
                 }
-            }
-            for(int j = 1; j <= m; j++)
-            {
                 if(visy[j])
                 {
                     ly[j] += d;
@@ -96,12 +98,11 @@ int KM()
             }
         }
     }
-    for(int i = 1; i <= m; i++)
+
+    int sum = 0;
+    for(int i = 1; i <= n; i++)
     {
-        if(match[i] > -1)
-        {
-            sum += w[match[i]][i];
-        }
+        sum += w[match[i]][i];
     }
     return sum;
 }
@@ -115,9 +116,7 @@ int main()
         for(int j = 1; j <= n; j++)
         {
             cin >> w[i][j];
-            d = max(d, w[i][j]);
         }
-        lx[i] = d;
     }
     cout << KM() << endl;
     return 0;
