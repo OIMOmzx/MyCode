@@ -1,110 +1,105 @@
 #include <iostream>
-#include <algorithm>
+#include <queue>
 #include <cstring>
-#include <climits>
+#include <algorithm>
 using namespace std;
 
-const int Max = 1000010;
-int n, m, p, q, z, cnt;
-int head[Max], vis[Max];
-
-struct criminal
+const int maxn = 10010, Max = 10010;
+const int inf = 0x3f3f3f3f;
+int nl, nr, m, s, t, u, v, w;
+int cnt = 0;
+int head[maxn], d[maxn];
+struct node
 {
-    int u, v, w;
-}t[Max];
+    int from, to, next, val;
+    int flow, cap;
+}e[Max * 2];
 
-bool cmp(criminal x, criminal y)
+void add(int u, int v, int w)
 {
-    if(x.w > y.w) return 1;
+    e[cnt].from = u;
+    e[cnt].to = v;
+    e[cnt].next = head[u];
+    e[cnt].flow = 0;
+    e[cnt].cap += w;
+    head[u] = cnt++;
+}
+
+bool bfs(int s, int t)//分层
+{
+    memset(d, 0, sizeof(d));
+    queue<int> q;
+    d[s] = 1;
+    q.push(s);
+
+    while(!q.empty())
+    {
+        int u = q.front();
+        q.pop();
+
+        for(int i = head[u]; i != -1; i = e[i].next)
+        {
+            int v = e[i].to;
+            if(d[v] == 0 && e[i].cap > e[i].flow)
+            {
+                d[v] = d[u] + 1;
+                q.push(v);
+                if(v == t) return 1;
+            }
+        }
+    }
     return 0;
 }
 
-struct node
+int dfs(int u, int flow, int t)//增广
 {
-    int from, to, next;
-}e[Max];
-
-void add(int uu, int vv)
-{
-    e[cnt].from = uu;
-    e[cnt].to = vv;
-    e[cnt].next = head[uu];
-    head[uu] = cnt++;
-}
-
-bool dfs(int x, int color)
-{
-    vis[x] = color;
-    for(int i = head[x]; i != -1; i = e[i].next)
+    if(u == t) return flow;
+    int rest = flow;
+    for(int i = head[u]; i != -1; i = e[i].next)
     {
-        int y = e[i].to;
-        if(vis[y] == 0)
+        int v = e[i].to;
+        if(d[v] == d[u] + 1 && e[i].cap > e[i].flow)
         {
-            if(dfs(y, -color) == 0) return 0;
-        }
-        else if(vis[y] == color)
-        {
-            return 0;
+            int k = dfs(v, min(rest, e[i].cap - e[i].flow), t);
+            if(k == 0) d[v] = 0;
+            e[i].flow += k;
+            e[i ^ 1].flow -= k;
+            rest -= k;
         }
     }
-    return 1;
+    return flow - rest;
 }
 
-void init()
+int dinic(int s, int t)
 {
-    cnt = 0;
-    memset(head, -1, sizeof(head));
-    memset(e, 0, sizeof(e));
-    memset(vis, 0, sizeof(vis));
-}
-
-
-bool check(int midn)
-{
-    init();
-    for(int i = 1; i <= m; i++)
+    int maxflow = 0;
+    while(bfs(s, t))
     {
-        if(t[i].w <= midn) break;
-        else
-        {
-            add(t[i].u, t[i].v);
-            add(t[i].v, t[i].u);
-        }
+        maxflow += dfs(s, inf, t);
     }
-    for(int i = 1; i <= n; i++)
-    {
-        if(vis[i] == 0)
-        {
-            if(dfs(i, 1) == 0) return 0;
-        }
-    }
-    return 1;
+    return maxflow;
 }
 
 int main()
 {
-    freopen("123456.in", "r", stdin);
-    freopen("123456.out", "w", stdout);
-    int l = 0, r = -0x3f3f3f3f, mid = (l + r) / 2;
-    init();
-
-    cin >> n >> m;
+    memset(head, -1, sizeof(head));
+    cin >> nl >> nr >> m;
     for(int i = 1; i <= m; i++)
     {
-        cin >> p >> q >> z;
-        //cout << z << endl;
-        r = max(r, z);
-        t[i].u = p, t[i].v = q, t[i].w = z;
+        cin >> u >> v;
+        add(u, v + nl, 1);
+        add(nl + v, u, 0);
     }
-    sort(t + 1, t + m + 1, cmp);
-    //cout << r << endl;
-    r = INT_MAX;
-    while(l <= r)
+    for(int i = 1; i <= nl; i++)
     {
-        mid = (l + r) / 2;
-        if(check(mid)) r = mid - 1;
-        else l = mid + 1;
+        add(0, i, 1);
+        add(i, 0, 1);
     }
-    cout << mid << endl;
+    for(int i = 1; i <= nr; i++)
+    {
+        add(i + nl, nl + nr + 1, 1);
+        add(nl + nr + 1, i + nl, 0);
+    }
+    cout << dinic(0, nl + nr + 1) << endl;
     return 0;
 }
