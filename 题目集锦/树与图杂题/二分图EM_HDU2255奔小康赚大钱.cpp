@@ -1,11 +1,12 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
-const int Max = 1000010;
+const int Max = 310;
 const int inf = 0x3f3f3f3f;
 int match[Max], visx[Max], visy[Max], lx[Max], ly[Max];
 int n, m, cnt = 0, slack[Max];
-int w[1010][1010];
+int w[310][310];
 
 /*
 struct node
@@ -109,15 +110,18 @@ int KM()
 
 int main()
 {
-    cin >> n;
-    for(int i = 1; i <= n; i++)
+    while(cin >> n)
     {
-        int d = 0;
-        for(int j = 1; j <= n; j++)
+        memset(w, 0, sizeof(w));
+        for(int i = 1; i <= n; i++)
         {
-            cin >> w[i][j];
+            int d = 0;
+            for(int j = 1; j <= n; j++)
+            {
+                scanf("%d", &w[i][j]);
+            }
         }
+        cout << KM() << endl;
     }
-    cout << KM() << endl;
     return 0;
 }
