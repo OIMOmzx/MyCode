@@ -16,6 +16,7 @@ int head[Max * 10];
 int value_of_all_node[Max * 10];
 int if_bomb_of_all_node[Max * 10];
 char name_of_all_node[Max * 10];//每个节点的名字，用桶数组形式存储
+bool if_of_all_node[Max * 10];//这个编号的点，是否是特殊点
 
 struct node
 {
