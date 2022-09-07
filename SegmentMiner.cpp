@@ -20,6 +20,7 @@ char name_of_all_node[Max * 10];//每个节点的名字，用桶数组形式存�
 bool if_special_of_all_node[Max * 10];//这个编号的点，是否是特殊点
 map<string, int> faster_find_player;//玩家 -> 编号快速 hash 映射
 int now_player_num;//目前玩家总数
+int now_round_player_coin[Max];
 
 struct miner
 {
@@ -72,6 +73,7 @@ int main()
         //#TODO:待补充结束条件
         while(1)//不限参与人数
         {
+            memset(now_round_player_coin, 0, sizeof(now_round_player_coin));
             string player_name;
             cout << "你是新来的？" << endl;
             cout << "报一下你的名字吧，我不记得你了，太多矿工来过这里，太多人离去，太多人就死在这里.....你一定要想起自己第一次来的时候的姓名，不然说错的话，矿洞就会遗忘你...." << endl;
@@ -93,6 +95,7 @@ int main()
             {
                 cout << "不幸的是，您踩到了雷。眼前的一切在消散。您意识散去之前，看到了闪烁的光影，与急促的喊叫。" << endl;
                 player[certain_player].coin += 0;
+                now_round_player_coin[certain_player] = 0;
             }
             else
             {
