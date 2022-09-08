@@ -63,6 +63,8 @@ void init()
     }
 }
 
+//bool play()
+
 int main()
 {
     cout << "这么说，你是上帝？你要创造这样一个矿洞？好吧，请输入一共有多少个点。我满足你" << endl;
@@ -178,13 +180,24 @@ int main()
             }
             else
             {
-                if(node_special[choose]) 
+                //#TODO:补充while
+                bool flag = 1;
+                while(1)
                 {
-                    //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发
-                }
-                else
-                {
-
+                    if(node_special[choose]) 
+                    {
+                        //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发
+                    }
+                    else
+                    {
+                        cout << "吱呀....哐！您到达了矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
+                        cout << node[choose].lnode << ", " << node[choose].rnode << endl;
+                    }
+                    if(flag == 0)
+                    {
+                        //#TODO:剧情
+                        break;
+                    }
                 }
                 //#TODO:首先，要定位到这个点所处的边，如果是特殊点，提供所有邻接点。
                 //#TODO:需要记录，走了几步，本轮得到矿的总量，得到矿的总量，maybe目前总排名，maybe当前局排名
