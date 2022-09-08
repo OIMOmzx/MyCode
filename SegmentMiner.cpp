@@ -9,10 +9,11 @@
 #include <unistd.h>
 using namespace std;
 
-const int Max = 110;//边的数量
+const int Max = 1010;//边的数量
 int num_of_node;//矿点数
 int num_of_special_node;//特殊点数
 int num_of_side;//建立边的总数
+int new_num_of_side;//链式前向星边数
 
 int head[Max * 10];
 map<string, int> faster_find_player;//玩家 -> 编号快速 hash 映射
@@ -24,6 +25,8 @@ int round_count = 0;//回合数计数
 int num_of_expert, expert_bomb;//专家数量和拆除的炸弹
 bool node_special[Max];//点是否为特殊点
 int now_num_of_side;
+vector<char> res;
+int faster_find_next[Max][Max];
 
 struct miner
 {
@@ -34,7 +37,7 @@ struct miner
 
 struct side
 {
-    char from, to;//字面意思
+    int from, to;//字面意思
     int next;//阅读代码者不用了解
     int num_of_node_of_the_side;//这条边上一共有多少节点（Attention !!! 不算两头的特殊点）
 }e[Max];//边集数组
@@ -48,13 +51,13 @@ struct nodes
     int lnode, rnode;//存储该点所处边的左右顶点编号
 }node[Max * 10];
 
-void add(char u, char v, int num_of_node_on_the_side)
+void add(int u, int v, int num_of_node_on_the_side)
 {
-    e[num_of_side].from = u;
-    e[num_of_side].to = v;
-    e[num_of_side].next = head[u];//同节点下，该边的下一条边
-    e[num_of_side].num_of_node_of_the_side = num_of_node_on_the_side;
-    head[u] = num_of_side++;
+    e[new_num_of_side].from = u;
+    e[new_num_of_side].to = v;
+    e[new_num_of_side].next = head[u];//同节点下，该边的下一条边
+    e[new_num_of_side].num_of_node_of_the_side = num_of_node_on_the_side;
+    head[u] = new_num_of_side++;
 }//链式前向星
 
 void init()
@@ -81,8 +84,10 @@ bool play(bool option, int now, int now_player)//0 -> left 1 -> right
     else
     {
         //cout << "jerjwjncrw" << 1 * times * node[now].value << ", " << now_player << endl;
+        if(node[now].value == 0) cout << "这里已经被探索过了" << endl;
         now_round_player_coin[now_player] += 1.0 * times * node[now].value;
         player[now_player].coin += 1.0 * times * node[now].value;
+        node[now].value = 0;
     }
     return 1;
 }
@@ -102,12 +107,12 @@ int normal(int now_pos, int certain_player, char choose_pos)
             {
                 return -1;
             }
+            now_pos = node[now_pos].left;
             if(play(0, now_pos, certain_player) == 0) 
             {
                 flag = 0;
                 return 0;
             }
-            now_pos = node[now_pos].left;
             return now_pos;
         }
         else if(faster_find_node[choose_pos] == node[now_pos].rnode)
@@ -116,12 +121,12 @@ int normal(int now_pos, int certain_player, char choose_pos)
             {
                 return -1;
             }
+            now_pos = node[now_pos].right;
             if(play(1, now_pos, certain_player) == 0) 
             {
                 flag = 0;
                 return 0;
             }
-            now_pos = node[now_pos].right;
             return now_pos;
         }
         if(flag == 0)
@@ -138,6 +143,20 @@ int normal(int now_pos, int certain_player, char choose_pos)
     }
     return -2;
 }
+
+void find_near_special(int now_pos)
+{
+    res.clear();
+    //cout << now_pos << ", " << head[now_pos] << endl;
+    for(int i = head[now_pos]; i != -1; i = e[i].next)
+    {
+        //cout << i << ", " << e[i].to << ", ";
+        res.push_back(node[e[i].to].name);
+        cout << node[e[i].to].name << " ";
+    }
+    cout << endl;
+}
+
 
 int main()
 {
@@ -188,13 +207,20 @@ int main()
         cin >> end_node;
         cout << "请输入这条边上所有的矿的个数（不算起、终点）" << endl;
         cin >> sum_of_node;
-        add(begin_node, end_node, sum_of_node);
+        add(faster_find_node[begin_node], faster_find_node[end_node], sum_of_node);
+        add(faster_find_node[end_node], faster_find_node[begin_node], sum_of_node);
+
         cout << "能不能给出他们的编号呢？" << endl;
         for(int j = 1; j <= sum_of_node; j++)
         {
             cin >> res_node[j];
         }
-        //#TODO:解决死循环
+        faster_find_next[faster_find_node[begin_node]][faster_find_node[end_node]] = res_node[1];
+        faster_find_next[faster_find_node[end_node]][faster_find_node[begin_node]] = res_node[sum_of_node - 1];
+        //cout << faster_find_node[begin_node] << ", " << faster_find_node[end_node] << endl;
+        //node_next_node[faster_find_node[begin_node]].push_back(res_node[1]);
+        //node_next_node[faster_find_node[end_node]].push_back(res_node[sum_of_node]);
+        //分别记录一个节点出去的每条边的第一个节点编号
         for(int j = 1; j <= sum_of_node; j++)
         {
             int res_lnode = faster_find_node[begin_node], res_rnode = faster_find_node[end_node];
@@ -276,7 +302,6 @@ int main()
             }
             else
             {
-                //#TODO:补充while
                 bool flag = 1;
                 int now_pos = choose;
                 cout << "吱呀....哐！您到达了一条矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
@@ -285,19 +310,69 @@ int main()
                 char choose_pos;
                 while(cin >> choose_pos)
                 {
+                    if(node[now_pos].value == 0) cout << "这里已经被探索过了" << endl;
+                    now_round_player_coin[certain_player] += 1.0 * times * node[now_pos].value;
+                    player[certain_player].coin += 1.0 * times * node[now_pos].value;
+                    node[now_pos].value = 0;
+
+                    bool flag = 0;
                     //cout << now_pos << ", " << certain_player << endl;
-                    now_pos = normal(now_pos, certain_player, choose_pos);
-                    //cout << "de2u  " << now_pos << endl;
-                    //#TODO:死亡反馈等内容
                     if(node_special[now_pos] == 1) 
                     {
+                        //cout << "kkk" << endl;
+                        flag = 1;
                         cout << "您抵达了一个特殊节点，" << node[now_pos].name << endl;
+
+                        if(node[now_pos].value == 0) cout << "这里已经被探索过了" << endl;
+                        now_round_player_coin[certain_player] += 1.0 * times * node[now_pos].value;
+                        player[certain_player].coin += 1.0 * times * node[now_pos].value;
+                        node[now_pos].value = 0;
+                        if(node[now_pos].bomb == 1) 
+                        {
+                            //#TODO:剧情以及优化
+                            cout << "咝...什么声音？轰！矿洞顶在垮塌，你眼前一黑，额前一热。本轮收益：" << now_round_player_coin[certain_player] << endl;
+                        }
+                        else
+                        {
+                            cout << "还好，您没寄。" << "目前获得矿数：" << now_round_player_coin[certain_player] << endl;
+                        }
+
+                        cout << "周围有这些点:";
+                        find_near_special(now_pos);
+                        cout << "请你做出选择，往哪个方向：";
+                        char res_pos;
+                        cin >> res_pos;
+                        now_pos = faster_find_next[now_pos][faster_find_node[res_pos]];
+                        cout << now_pos << ", " << faster_find_node[res_pos] << endl;
+
+                        if(node[now_pos].value == 0) cout << "这里已经被探索过了" << endl;
+                        now_round_player_coin[certain_player] += 1.0 * times * node[now_pos].value;
+                        player[certain_player].coin += 1.0 * times * node[now_pos].value;
+                        node[now_pos].value = 0;
+                        if(node[now_pos].bomb == 1) 
+                        {
+                            //#TODO:剧情以及优化
+                            cout << "咝...什么声音？轰！矿洞顶在垮塌，你眼前一黑，额前一热。本轮收益：" << now_round_player_coin[certain_player] << endl;
+                        }
+                        else
+                        {
+                            cout << "还好，您没寄。" << "目前获得矿数：" << now_round_player_coin[certain_player] << endl;
+                        }
+
                          //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发，盾
                     }
-                    else if(node[now_pos].bomb == 1) 
+                    if(flag == 0)
                     {
-                        //#TODO:剧情以及优化
-                        cout << "dead" << now_round_player_coin[certain_player] << endl;
+                        now_pos = normal(now_pos, certain_player, choose_pos);
+                        if(node[now_pos].bomb == 1) 
+                        {
+                            //#TODO:剧情以及优化
+                            cout << "咝...什么声音？轰！矿洞顶在垮塌，你眼前一黑，额前一热。本轮收益：" << now_round_player_coin[certain_player] << endl;
+                        }
+                        else
+                        {
+                            cout << "还好，您没寄。" << "目前获得矿数：" << now_round_player_coin[certain_player] << endl;
+                        }
                     }
                 }
                 //#TODO:首先，要定位到这个点所处的边，如果是特殊点，提供所有邻接点。
