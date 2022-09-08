@@ -6,6 +6,7 @@
 #include <queue>
 #include <stack>
 #include <map>
+#include <unistd.h>
 using namespace std;
 
 const int Max = 110;//边的数量
@@ -22,6 +23,7 @@ double times = 1.00;//大后期矿藏涨价
 int round_count = 0;//回合数计数
 int num_of_expert, expert_bomb;//专家数量和拆除的炸弹
 bool node_special[Max];//点是否为特殊点
+int now_num_of_side;
 
 struct miner
 {
@@ -51,6 +53,7 @@ void add(char u, char v, int num_of_node_on_the_side)
     e[num_of_side].from = u;
     e[num_of_side].to = v;
     e[num_of_side].next = head[u];//同节点下，该边的下一条边
+    e[num_of_side].num_of_node_of_the_side = num_of_node_on_the_side;
     head[u] = num_of_side++;
 }//链式前向星
 
@@ -145,13 +148,19 @@ int main()
     cin >> num_of_special_node;
     for(int i = 1; i <= num_of_special_node; i++)
     {
-        char node_name, node_num;
+        char node_name;
+        int node_num;
         double node_value;
+        //#TODO:解决反复输出
         cout << "你是想添加特殊点吗？但我这里只有 A to Z，上帝先生，先给你这些。" << endl;
+        //usleep(100000);
         cout << "....抑或是....一些金矿、银矿将代替灰黑的煤矿，成为矿洞中不可多得的宝物。想清楚啊，矿工们可能为其而争斗！" << endl;
+        //usleep(100000);
         cout << "你还是来到了这一步？好吧，先输入节点的名字，如果，它不应当有一个名字，那就输入 ? 也行，这是它对世界小小的疑惑。" << endl;
+        //usleep(100000);
         cin >> node_name;
         cout << "好了，节点没有一个像样的名字也不要紧，给它一个编号。即使是114514，它也会很开心的" << endl;
+        //usleep(100000);
         cin >> node_num;
         if(node_name >= 'A' && node_name <= 'Z')
         {
@@ -159,32 +168,37 @@ int main()
             faster_find_node[node_name] = node_num;
         }
         cout << "它有特殊的价值吗？它是否十分贵重？或者，正如你我，平凡、渺小？" << endl;
+        //sleep(5);
         cin >> node_value;
+        //cout << node_name << ", " << node_num << ", " << node_value << endl;
         node[node_num].name = node_name;
         node[node_num].value = node_value;
     }
     cout << "特殊点在交织，交织成了最初的矿洞，现在，指画山河，试着将所有矿藏归类" << endl;
     cout << "先输入你想添加的边数" << endl;
-    cin >> num_of_side;
-    for(int i = 1; i <= num_of_side; i++)
+    cin >> now_num_of_side;
+    for(int i = 1; i <= now_num_of_side; i++)
     {
+        //cout << "i" << i << ", " << now_num_of_side << endl;
         char begin_node, end_node;
         int sum_of_node, res_node[Max];
         cout << "起始点：";
         cin >> begin_node;
-        cout << endl;
         cout << "终止点：";
         cin >> end_node;
         cout << "请输入这条边上所有的矿的个数（不算起、终点）" << endl;
         cin >> sum_of_node;
         add(begin_node, end_node, sum_of_node);
+        cout << "能不能给出他们的编号呢？" << endl;
         for(int j = 1; j <= sum_of_node; j++)
         {
             cin >> res_node[j];
         }
+        //#TODO:解决死循环
         for(int j = 1; j <= sum_of_node; j++)
         {
             int res_lnode = faster_find_node[begin_node], res_rnode = faster_find_node[end_node];
+            //cout << faster_find_node[begin_node] << endl;
             node[res_node[j]].lnode = res_lnode, node[res_node[j]].rnode = res_rnode;
             if(j == 1)//该边的第一个节点
             {
@@ -202,6 +216,7 @@ int main()
                 node[res_node[j]].right = res_node[j + 1];
             }
         }
+        //cout << "yes" << i << endl;
     }
 
     cout << "谢谢您，上帝先生，我相信，矿工们能进来了" << endl;
@@ -262,8 +277,9 @@ int main()
                     if(node_special[now_pos] == 1) 
                     {
                         cout << "您抵达了一个特殊节点，" << node[now_pos].name << endl;
-                         //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发
+                         //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发，盾
                     }
+                    if(normal(now_pos, certain_player) == 0) cout << "dead" << endl;
                 }
                 //#TODO:首先，要定位到这个点所处的边，如果是特殊点，提供所有邻接点。
                 //#TODO:需要记录，走了几步，本轮得到矿的总量，得到矿的总量，maybe目前总排名，maybe当前局排名
