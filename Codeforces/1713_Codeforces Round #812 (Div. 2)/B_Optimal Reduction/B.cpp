@@ -1,4 +1,5 @@
 #include <iostream>
+<<<<<<< Updated upstream
 #include <cstring>
 using namespace std;
 
@@ -26,5 +27,11 @@ int main()
         if(time < res) printf("NO\n");
         else printf("YES\n");
     }
+=======
+using namespace std;
+
+int main()
+{
+>>>>>>> Stashed changes
     return 0;
 }
