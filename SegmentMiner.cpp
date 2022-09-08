@@ -18,6 +18,8 @@ map<string, int> faster_find_player;//玩家 -> 编号快速 hash 映射
 int now_player_num;//目前玩家总数
 int now_round_player_coin[Max];
 double times = 1.00;//大后期矿藏涨价
+int round_count = 0;//回合数计数
+int num_of_expert, expert_bomb;//专家数量和拆除的炸弹
 
 struct miner
 {
@@ -83,9 +85,22 @@ int main()
     while(1)//由许多轮组成的本场游戏
     {
         //#TODO:待补充结束条件
+        round_count++;
+        cout << "Round " << round_count << " begins !!" << endl;
+        cout << "有拆弹专家吗？几位？" << endl;
+        cin >> num_of_expert;
+        if(num_of_expert != 0)
+        {
+            cout << "他们要拆除什么编号的炸弹" << endl;
+            for(int i = 1; i <= num_of_expert; i++)
+            {
+                cin >> expert_bomb;
+                node[expert_bomb].bomb = 0;
+            }
+        }
+
         while(1)//不限参与人数
         {
-            //#TODO拆弹专家由上帝设置
             memset(now_round_player_coin, 0, sizeof(now_round_player_coin));
             string player_name;
             cout << "你是....新来的矿工？这里很危险" << endl;
@@ -106,7 +121,7 @@ int main()
             int choose;
             cin >> choose;
             cout << "你想选择哪一个节点？别害怕，即使遭遇不测，我相信您也能再次回到这里。" << endl;
-            if(if_bomb_of_all_node[choose] == 1)
+            if(node[choose].bomb == 1)
             {
                 cout << "不幸的是，您踩到了雷。眼前的一切在消散。您意识散去之前，看到了闪烁的光影，与急促的喊叫。" << endl;
                 player[certain_player].coin += 0;
