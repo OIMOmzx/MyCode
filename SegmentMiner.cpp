@@ -63,7 +63,19 @@ void init()
     }
 }
 
-//bool play()
+bool play(bool option, int now, int now_player)//0 -> left 1 -> right
+{
+    int now_left = node[now].left, now_right = node[now].right;
+    if(node[now].bomb == 1)
+    {
+        return 0;
+    }
+    else
+    {
+        now_round_player_coin[now_player] += 1 * times * node[now].value;
+        player[now_player].coin += 1 * times * node[now].value;
+    }
+}
 
 int main()
 {
@@ -113,20 +125,21 @@ int main()
         for(int j = 1; j <= sum_of_node; j++)
         {
             int res_lnode = faster_find_node[begin_node], res_rnode = faster_find_node[end_node];
+            node[res_node[j]].lnode = res_lnode, node[res_node[j]].rnode = res_rnode, 
             if(j == 1)//该边的第一个节点
             {
-                node[res_node[j]].lnode = res_lnode;
-                node[res_node[j]].rnode = res_node[j + 1];
+                node[res_node[j]].left = res_lnode;
+                node[res_node[j]].right = res_node[j + 1];
             }
             else if(j == sum_of_node)//该边最后一个节点
             {
-                node[res_node[j]].lnode = res_node[j - 1];
-                node[res_node[j]].rnode = res_rnode;
+                node[res_node[j]].left = res_node[j - 1];
+                node[res_node[j]].right = res_rnode;
             }
             else//正常情况
             {
-                node[res_node[j]].lnode = res_node[j - 1];
-                node[res_node[j]].rnode = res_node[j + 1];
+                node[res_node[j]].left = res_node[j - 1];
+                node[res_node[j]].right = res_node[j + 1];
             }
         }
     }
@@ -169,9 +182,10 @@ int main()
 
             int certain_player = faster_find_player[player_name];//在探险的矿工
 
+            cout << "你想选择哪一个节点？别害怕，即使遭遇不测，我相信您也能再次回到这里。" << endl;
             int choose;
             cin >> choose;
-            cout << "你想选择哪一个节点？别害怕，即使遭遇不测，我相信您也能再次回到这里。" << endl;
+            //#TODO:修理一下内容
             if(node[choose].bomb == 1)
             {
                 cout << "不幸的是，您踩到了雷。眼前的一切在消散。您意识散去之前，看到了闪烁的光影，与急促的喊叫。" << endl;
@@ -182,16 +196,54 @@ int main()
             {
                 //#TODO:补充while
                 bool flag = 1;
+                int now_pos = choose;
                 while(1)
                 {
-                    if(node_special[choose]) 
+                    if(node_special[now_pos] == 1) 
                     {
+                        cout << "您抵达了一个特殊节点，" << node[now_pos].name << endl;
                         //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发
                     }
                     else
                     {
-                        cout << "吱呀....哐！您到达了矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
+                        cout << "吱呀....哐！您到达了一条矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
                         cout << node[choose].lnode << ", " << node[choose].rnode << endl;
+                        char choose_pos;
+                        cout << "请输出您想选择的方向，每输入一次，都会向该方向走一步，然后反馈是否死亡（以及得到矿产的数量）：";
+                        while(cin >> choose_pos)
+                        {
+                            if(choose_pos == node[now_node].lnode)
+                            {
+                                if(node_special[now_pos] == 1) 
+                                {
+                                    break;
+                                }
+                                if(play(0, now_pos, certain_player) == 0) 
+                                {
+                                    flag = 0;
+                                    break;
+                                }
+                                now_pos = node[now_pos].left;
+                            }
+                            else if(choose_pos == node[now_node].rnode)
+                            {
+                                if(node_special[now_pos] == 1) 
+                                {
+                                    break;
+                                }
+                                if(play(1, now_pos, certain_player) == 0) 
+                                {
+                                    flag = 0;
+                                    break;
+                                }
+                                now_pos = node[now_pos].right;
+                            }
+                            if(flag == 0)
+                            {
+                                //#TODO:剧情
+                                break;
+                            }
+                        }
                     }
                     if(flag == 0)
                     {
