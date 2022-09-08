@@ -40,6 +40,8 @@ struct nodes
     char name;
     double value;
     bool bomb;
+    int left, right;//存储该点的左右序号？暂定
+    int lnode, rnode;//存储该点所处边的左右顶点
 }node[Max * 10];
 
 void add(int u, int v, int num_of_node_on_the_side)
@@ -129,6 +131,7 @@ int main()
             }
             else
             {
+                //#TODO:首先，要定位到这个点所处的边，如果是特殊点，提供所有邻接点。
                 //#TODO:需要记录，走了几步，本轮得到矿的总量，得到矿的总量，maybe目前总排名，maybe当前局排名
                 //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发
             }
