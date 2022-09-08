@@ -45,7 +45,7 @@ struct nodes
     double value;
     bool bomb;
     int left, right;//存储该点的左右序号？暂定
-    char lnode, rnode;//存储该点所处边的左右顶点编号
+    int lnode, rnode;//存储该点所处边的左右顶点编号
 }node[Max * 10];
 
 void add(char u, char v, int num_of_node_on_the_side)
@@ -142,6 +142,7 @@ int normal(int now_pos, int certain_player)
 
 int main()
 {
+    init();
     cout << "这么说，你是上帝？你要创造这样一个矿洞？好吧，请输入一共有多少个点。我满足你" << endl;
     cin >> num_of_node;
     cout << "好的，矿藏正在填充......请输入特殊点的个数，矿工们也需要十字路口，否则太单调；他们同样需要适时的奖励，平淡的人生，也需要有不同的火花" << endl;
@@ -198,7 +199,7 @@ int main()
         for(int j = 1; j <= sum_of_node; j++)
         {
             int res_lnode = faster_find_node[begin_node], res_rnode = faster_find_node[end_node];
-            //cout << faster_find_node[begin_node] << endl;
+            //cout << res_node[j] << ", " << res_lnode << ", " << res_rnode << endl;
             node[res_node[j]].lnode = res_lnode, node[res_node[j]].rnode = res_rnode;
             if(j == 1)//该边的第一个节点
             {
@@ -220,6 +221,13 @@ int main()
     }
 
     cout << "谢谢您，上帝先生，我相信，矿工们能进来了" << endl;
+
+    /*
+    for(int i = 1; i <= num_of_node; i++)
+    {
+        cout << i << ": " << node[i].left << ", " << node[i].right << ", " << node[i].lnode << ", " << node[i].rnode << endl;
+    }
+    */
 
     while(1)//由许多轮组成的本场游戏
     {
