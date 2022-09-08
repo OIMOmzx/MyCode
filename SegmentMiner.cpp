@@ -64,24 +64,30 @@ void init()
     {
         if(i % 10 == 0) node[i].bomb = 1;
     }
+    for(int i = 1; i <= num_of_node; i++)
+    {
+        if(node[i].value == 0) node[i].value = 1;
+    }
 }
 
 bool play(bool option, int now, int now_player)//0 -> left 1 -> right
 {
     int now_left = node[now].left, now_right = node[now].right;
+    //cout << now_left << ", " << now_right << endl;
     if(node[now].bomb == 1)
     {
         return 0;
     }
     else
     {
-        now_round_player_coin[now_player] += 1 * times * node[now].value;
-        player[now_player].coin += 1 * times * node[now].value;
+        //cout << "jerjwjncrw" << 1 * times * node[now].value << ", " << now_player << endl;
+        now_round_player_coin[now_player] += 1.0 * times * node[now].value;
+        player[now_player].coin += 1.0 * times * node[now].value;
     }
     return 1;
 }
 
-int normal(int now_pos, int certain_player)
+int normal(int now_pos, int certain_player, char choose_pos)
 {
     bool flag = 1;
     if(node_special[now_pos] == 1) 
@@ -90,47 +96,40 @@ int normal(int now_pos, int certain_player)
     }
     else
     {
-        cout << "吱呀....哐！您到达了一条矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
-        cout << node[now_pos].lnode << ", " << node[now_pos].rnode << endl;
-        char choose_pos;
-        cout << "请输出您想选择的方向，每输入一次，都会向该方向走一步，然后反馈是否死亡（以及得到矿产的数量）：";
-        while(cin >> choose_pos)
+        if(faster_find_node[choose_pos] == node[now_pos].lnode)
         {
-            if(choose_pos == node[now_pos].lnode)
+            if(node_special[now_pos] == 1) 
             {
-                if(node_special[now_pos] == 1) 
-                {
-                    return -1;
-                }
-                if(play(0, now_pos, certain_player) == 0) 
-                {
-                    flag = 0;
-                    return 0;
-                }
-                now_pos = node[now_pos].left;
-                normal(now_pos, certain_player);
+                return -1;
             }
-            else if(choose_pos == node[now_pos].rnode)
+            if(play(0, now_pos, certain_player) == 0) 
             {
-                if(node_special[now_pos] == 1) 
-                {
-                    return now_pos;
-                }
-                if(play(1, now_pos, certain_player) == 0) 
-                {
-                    flag = 0;
-                    break;
-                }
-                now_pos = node[now_pos].right;
-                normal(now_pos, certain_player);
-            }
-            if(flag == 0)
-            {
+                flag = 0;
                 return 0;
-                //#TODO:剧情
-                break;
             }
+            now_pos = node[now_pos].left;
+            return now_pos;
         }
+        else if(faster_find_node[choose_pos] == node[now_pos].rnode)
+        {
+            if(node_special[now_pos] == 1) 
+            {
+                return -1;
+            }
+            if(play(1, now_pos, certain_player) == 0) 
+            {
+                flag = 0;
+                return 0;
+            }
+            now_pos = node[now_pos].right;
+            return now_pos;
+        }
+        if(flag == 0)
+        {
+            return 0;
+            //#TODO:剧情
+        }
+        
     }
     if(flag == 0)
     {
@@ -142,11 +141,11 @@ int normal(int now_pos, int certain_player)
 
 int main()
 {
-    init();
     cout << "这么说，你是上帝？你要创造这样一个矿洞？好吧，请输入一共有多少个点。我满足你" << endl;
     cin >> num_of_node;
     cout << "好的，矿藏正在填充......请输入特殊点的个数，矿工们也需要十字路口，否则太单调；他们同样需要适时的奖励，平淡的人生，也需要有不同的火花" << endl;
     cin >> num_of_special_node;
+    init();
     for(int i = 1; i <= num_of_special_node; i++)
     {
         char node_name;
@@ -280,14 +279,26 @@ int main()
                 //#TODO:补充while
                 bool flag = 1;
                 int now_pos = choose;
-                while(1)
+                cout << "吱呀....哐！您到达了一条矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
+                cout << node[node[now_pos].lnode].name << ", " << node[node[now_pos].rnode].name << endl;
+                cout << "请输出您想选择的方向，每输入一次，都会向该方向走一步，然后反馈是否死亡（以及得到矿产的数量）：";
+                char choose_pos;
+                while(cin >> choose_pos)
                 {
+                    //cout << now_pos << ", " << certain_player << endl;
+                    now_pos = normal(now_pos, certain_player, choose_pos);
+                    //cout << "de2u  " << now_pos << endl;
+                    //#TODO:死亡反馈等内容
                     if(node_special[now_pos] == 1) 
                     {
                         cout << "您抵达了一个特殊节点，" << node[now_pos].name << endl;
                          //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发，盾
                     }
-                    if(normal(now_pos, certain_player) == 0) cout << "dead" << endl;
+                    else if(node[now_pos].bomb == 1) 
+                    {
+                        //#TODO:剧情以及优化
+                        cout << "dead" << now_round_player_coin[certain_player] << endl;
+                    }
                 }
                 //#TODO:首先，要定位到这个点所处的边，如果是特殊点，提供所有邻接点。
                 //#TODO:需要记录，走了几步，本轮得到矿的总量，得到矿的总量，maybe目前总排名，maybe当前局排名
