@@ -75,6 +75,66 @@ bool play(bool option, int now, int now_player)//0 -> left 1 -> right
         now_round_player_coin[now_player] += 1 * times * node[now].value;
         player[now_player].coin += 1 * times * node[now].value;
     }
+    return 1;
+}
+
+int normal(int now_pos, int certain_player)
+{
+    bool flag = 1;
+    if(node_special[now_pos] == 1) 
+    {
+       return -1;
+    }
+    else
+    {
+        cout << "吱呀....哐！您到达了一条矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
+        cout << node[now_pos].lnode << ", " << node[now_pos].rnode << endl;
+        char choose_pos;
+        cout << "请输出您想选择的方向，每输入一次，都会向该方向走一步，然后反馈是否死亡（以及得到矿产的数量）：";
+        while(cin >> choose_pos)
+        {
+            if(choose_pos == node[now_pos].lnode)
+            {
+                if(node_special[now_pos] == 1) 
+                {
+                    return -1;
+                }
+                if(play(0, now_pos, certain_player) == 0) 
+                {
+                    flag = 0;
+                    return 0;
+                }
+                now_pos = node[now_pos].left;
+                normal(now_pos, certain_player);
+            }
+            else if(choose_pos == node[now_pos].rnode)
+            {
+                if(node_special[now_pos] == 1) 
+                {
+                    return now_pos;
+                }
+                if(play(1, now_pos, certain_player) == 0) 
+                {
+                    flag = 0;
+                    break;
+                }
+                now_pos = node[now_pos].right;
+                normal(now_pos, certain_player);
+            }
+            if(flag == 0)
+            {
+                return 0;
+                //#TODO:剧情
+                break;
+            }
+        }
+    }
+    if(flag == 0)
+    {
+        //#TODO:剧情
+        return 0;
+    }
+    return -2;
 }
 
 int main()
@@ -125,7 +185,7 @@ int main()
         for(int j = 1; j <= sum_of_node; j++)
         {
             int res_lnode = faster_find_node[begin_node], res_rnode = faster_find_node[end_node];
-            node[res_node[j]].lnode = res_lnode, node[res_node[j]].rnode = res_rnode, 
+            node[res_node[j]].lnode = res_lnode, node[res_node[j]].rnode = res_rnode;
             if(j == 1)//该边的第一个节点
             {
                 node[res_node[j]].left = res_lnode;
@@ -202,53 +262,7 @@ int main()
                     if(node_special[now_pos] == 1) 
                     {
                         cout << "您抵达了一个特殊节点，" << node[now_pos].name << endl;
-                        //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发
-                    }
-                    else
-                    {
-                        cout << "吱呀....哐！您到达了一条矿洞，周围一片漆黑。提着灯，能辨别这个矿道的起点与终点" << endl;
-                        cout << node[choose].lnode << ", " << node[choose].rnode << endl;
-                        char choose_pos;
-                        cout << "请输出您想选择的方向，每输入一次，都会向该方向走一步，然后反馈是否死亡（以及得到矿产的数量）：";
-                        while(cin >> choose_pos)
-                        {
-                            if(choose_pos == node[now_node].lnode)
-                            {
-                                if(node_special[now_pos] == 1) 
-                                {
-                                    break;
-                                }
-                                if(play(0, now_pos, certain_player) == 0) 
-                                {
-                                    flag = 0;
-                                    break;
-                                }
-                                now_pos = node[now_pos].left;
-                            }
-                            else if(choose_pos == node[now_node].rnode)
-                            {
-                                if(node_special[now_pos] == 1) 
-                                {
-                                    break;
-                                }
-                                if(play(1, now_pos, certain_player) == 0) 
-                                {
-                                    flag = 0;
-                                    break;
-                                }
-                                now_pos = node[now_pos].right;
-                            }
-                            if(flag == 0)
-                            {
-                                //#TODO:剧情
-                                break;
-                            }
-                        }
-                    }
-                    if(flag == 0)
-                    {
-                        //#TODO:剧情
-                        break;
+                         //#TODO:走到特殊点行走处理，including bfs指令, [后期]tp, 探测器，灌水等功能开发
                     }
                 }
                 //#TODO:首先，要定位到这个点所处的边，如果是特殊点，提供所有邻接点。
