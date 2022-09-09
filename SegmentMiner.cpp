@@ -73,21 +73,21 @@ void init()
     }
 }
 
-bool play(bool option, int now, int now_player)//0 -> left 1 -> right
+bool play(int now_pos, int certain_player)//0 -> left 1 -> right
 {
-    int now_left = node[now].left, now_right = node[now].right;
+    int now_left = node[now_pos].left, now_right = node[now_pos].right;
     //cout << now_left << ", " << now_right << endl;
-    if(node[now].bomb == 1)
+    if(node[now_pos].bomb == 1)
     {
         return 0;
     }
     else
     {
         //cout << "jerjwjncrw" << 1 * times * node[now].value << ", " << now_player << endl;
-        if(node[now].value == 0) cout << "这里已经被探索过了" << endl;
-        now_round_player_coin[now_player] += 1.0 * times * node[now].value;
-        player[now_player].coin += 1.0 * times * node[now].value;
-        node[now].value = 0;
+        //if(node[now_pos].value == 0) cout << "这里已经被探索过了" << endl;
+        now_round_player_coin[certain_player] += 1.0 * times * node[now_pos].value;
+        player[certain_player].coin += 1.0 * times * node[now_pos].value;
+        node[now_pos].value = 0;
     }
     return 1;
 }
@@ -108,7 +108,7 @@ int normal(int now_pos, int certain_player, char choose_pos)
                 return -1;
             }
             now_pos = node[now_pos].left;
-            if(play(0, now_pos, certain_player) == 0) 
+            if(play(now_pos, certain_player) == 0) 
             {
                 flag = 0;
                 return 0;
@@ -122,7 +122,7 @@ int normal(int now_pos, int certain_player, char choose_pos)
                 return -1;
             }
             now_pos = node[now_pos].right;
-            if(play(1, now_pos, certain_player) == 0) 
+            if(play(now_pos, certain_player) == 0) 
             {
                 flag = 0;
                 return 0;
@@ -310,10 +310,7 @@ int main()
                 char choose_pos;
                 while(cin >> choose_pos)
                 {
-                    if(node[now_pos].value == 0) cout << "这里已经被探索过了" << endl;
-                    now_round_player_coin[certain_player] += 1.0 * times * node[now_pos].value;
-                    player[certain_player].coin += 1.0 * times * node[now_pos].value;
-                    node[now_pos].value = 0;
+                    play(now_pos, certain_player);
 
                     bool flag = 0;
                     //cout << now_pos << ", " << certain_player << endl;
@@ -322,11 +319,8 @@ int main()
                         //cout << "kkk" << endl;
                         flag = 1;
                         cout << "您抵达了一个特殊节点，" << node[now_pos].name << endl;
-
-                        if(node[now_pos].value == 0) cout << "这里已经被探索过了" << endl;
-                        now_round_player_coin[certain_player] += 1.0 * times * node[now_pos].value;
-                        player[certain_player].coin += 1.0 * times * node[now_pos].value;
-                        node[now_pos].value = 0;
+                        play(now_pos, certain_player);
+                        
                         if(node[now_pos].bomb == 1) 
                         {
                             //#TODO:剧情以及优化
@@ -345,10 +339,8 @@ int main()
                         now_pos = faster_find_next[now_pos][faster_find_node[res_pos]];
                         cout << now_pos << ", " << faster_find_node[res_pos] << endl;
 
-                        if(node[now_pos].value == 0) cout << "这里已经被探索过了" << endl;
-                        now_round_player_coin[certain_player] += 1.0 * times * node[now_pos].value;
-                        player[certain_player].coin += 1.0 * times * node[now_pos].value;
-                        node[now_pos].value = 0;
+                        play(now_pos, certain_player);
+
                         if(node[now_pos].bomb == 1) 
                         {
                             //#TODO:剧情以及优化
