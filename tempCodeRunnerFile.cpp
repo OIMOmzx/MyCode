@@ -1,38 +1,58 @@
 #include <iostream>
-#include <algorithm>
 using namespace std;
 
-const int Max = 1000010;
-int n;
-int a[Max], b[Max];
-int sum1 = 0, sum2 = 0;
+long long lowbit(long long x)
+{
+    return x & (-x);
+}
+
+long long t, l, r;
 
 int main()
 {
-    cin >> n;
-    for(int i = 1; i <= n; i++)
+    cin >> t;
+    while(t--)
     {
-        cin >> a[i];
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> b[i];
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        sum1 += abs(a[i] - b[i]);
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        sum2 += abs(a[n - i + 1] - b[i]);
-    }
-    if(sum2 <= sum1 - 1)
-    {
-        cout << sum2 + 1 << endl;
-    }
-    else
-    {
-        cout << sum1 << endl;
+        cin >> l >> r;
+        long long ans = 0;
+        /*
+        for(long long i = l; i <= r; i++)
+        {
+            if(lowbit(i) < lowbit(i + 1))
+            {
+                ans++;
+            }
+        }
+        cout << ans << endl;
+        */
+       if(r % 2 == 0 && l % 2 == 0)
+       {
+            cout << (r - l) / 2 << endl;
+       }
+       else if(r % 2 == 1 && l % 2 == 0)
+       {
+            cout << (r - l) / 2 + 1 << endl;
+       }
+       else if(r % 2 == 0 && l % 2 == 1)
+       {
+            cout << (r - l) / 2 + 1 << endl;
+       }
+       else
+       {
+            cout << (r - l) / 2 + 1 << endl;
+       }
     }
     return 0;
 }
+
+/*
+4
+112 2008
+948
+117 1177
+531
+1108 2735
+814
+377 2008
+816
+*/
