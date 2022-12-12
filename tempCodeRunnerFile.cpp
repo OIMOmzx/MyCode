@@ -1,58 +1,41 @@
 #include <iostream>
+#include <ctime>
+#include <vector>
 using namespace std;
 
-long long lowbit(long long x)
-{
-    return x & (-x);
-}
-
-long long t, l, r;
+int cnt = 10;
+int n = 81;
+vector<int> a;
+vector<int> b;
+int suma, sumb, ka, kb;
+double sum1, sum2;
 
 int main()
 {
-    cin >> t;
-    while(t--)
+    srand(time(0));
+    for(int i = 1; i <= cnt; i++)
     {
-        cin >> l >> r;
-        long long ans = 0;
-        /*
-        for(long long i = l; i <= r; i++)
+        suma = 0, sumb = 0, ka = 0, kb = 0;
+        for(int j = 1; j <= n; j++)
         {
-            if(lowbit(i) < lowbit(i + 1))
+            int num = rand() % 3;
+            int now = rand() % 1000 + 1;
+            if(num == 0)
             {
-                ans++;
+                suma += now;
+                ka++;
             }
-        }
-        cout << ans << endl;
-        */
-       if(r % 2 == 0 && l % 2 == 0)
-       {
-            cout << (r - l) / 2 << endl;
-       }
-       else if(r % 2 == 1 && l % 2 == 0)
-       {
-            cout << (r - l) / 2 + 1 << endl;
-       }
-       else if(r % 2 == 0 && l % 2 == 1)
-       {
-            cout << (r - l) / 2 + 1 << endl;
-       }
-       else
-       {
-            cout << (r - l) / 2 + 1 << endl;
-       }
+            else
+            {
+                sumb += now;
+                kb++;
+            }
+        } 
+        cout << suma * 1.0 / ka << ", " << sumb * 1.0 / kb << endl;
+
+        sum1 += suma * 1.0 / ka;
+        sum2 += sumb * 1.0 / kb;
     }
+    cout << sum1 * 1.0 / cnt << ", " << sum2 * 1.0 / cnt;
     return 0;
 }
-
-/*
-4
-112 2008
-948
-117 1177
-531
-1108 2735
-814
-377 2008
-816
-*/
