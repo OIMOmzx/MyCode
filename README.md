@@ -3,6 +3,8 @@
 1. 2022.2.15 GitHub 内容完善
 2. 2022.7.10 修改部分内容
 3. 2022.8.16 精简内容的表述，修改了一些文字幼稚、不成熟的地方。
+4. 2022.12.28 修改了一些不符合现实的内容
+
 
 ### PART 0 广告位
 [CSDN食用更佳](https://blog.csdn.net/OIMOmzx/article/details/120071233)
@@ -22,40 +24,30 @@
 好像没了？？
 
 ### PART 2 关于我
-不建议百度搜索“OIMOmzx”，同时欢迎叫我 MeZaTion（确信），缩写：mezt.，形容词性（mzx 创造的）：mezaty。***千万*** 不要！叫我 Mezition, mezAtion, Maozation, MaozAtion...千奇百怪的名称。
+不建议百度搜索“OIMOmzx”，同时不怎么欢迎叫我 MeZaTion（确信）。
 
-说白了，菜死了，弱爆了，被虐翻是家常便饭。尤其是文化课，稳居被虐翻的前列. OI 更弱，不可以去问 [lcx 老师](https://www.luogu.com.cn/user/338284)
+说白了，菜死了，弱爆了，被虐翻是家常便饭。尤其是文化课，稳居被虐翻的前列. OI 更弱，不允许去问 [lcx 老师](https://www.luogu.com.cn/user/338284)
 
-目前在双修，主要是 MOer, 副业是 OIer。
+目前在双修，主要是 MOer, 副业是 OIer（AFOed)
 
 ~~双休路是很窄的，不要想万奕轩 by 汪师林老师~~
 
-目前在双修，主要是 MOer, 副业是 OIer。
+目前在双修，主要是 MOer, 副业是 OIer（AFOed）
 
 膜拜和我一起学 OI 的 [⚡牛逼的蒟蒻
-](https://www.luogu.com.cn/user/299817) and [AFOed, 吴瑞泽](https://www.luogu.com.cn/user/379902) and [大概 AFOed，zjx](https://www.luogu.com.cn/user/319620) and [球球](https://www.luogu.com.cn/user/511250)
+](https://www.luogu.com.cn/user/299817) and [AFOed, 吴瑞泽](https://www.luogu.com.cn/user/379902) and [AFOed，zjx](https://www.luogu.com.cn/user/319620) and [LQQ](https://www.luogu.com.cn/user/511250)
 
-外校：[Sparkle_ZH](https://www.luogu.com.cn/user/265517), [hhdxgd](https://www.luogu.com.cn/user/438544), [NTZ小粉](https://www.luogu.com.cn/user/397282)
+外校：[Sparkle_ZH](https://www.luogu.com.cn/user/265517), [hhdxgd](https://www.luogu.com.cn/user/438544), [NTZ](https://www.luogu.com.cn/user/397282)
 
 真名：mzx，~~都知道，也没什么好说~~。是个男 OIer。
 
-目前计划在一年半到两年之内 AFO，持续 AFO，间歇 AFO。
+已经 **AFOed**
 
 果然呢，一点名气也没有，说完了。当然还会长期更新。
 
 2021.9.1 0:00正式成为 czs，在某弱省的强校就读。
 
-### PART 3 学习记录
-1. 数据删除
-
-2. 2020 年 CSP-J 52.5（第一轮）
-
-3. 2021 年 CSP-J 71, CSP-S 37.5（第一轮）
-
-4. CSP-J2021 192pts, rk36
-
-
-### PART 4 我的账号
+### PART 3 我的账号
 
 ### 1. luogu : [OIMOmzx](https://www.luogu.com.cn/user/414308)
 
@@ -66,7 +58,7 @@
 ### 4. HDU : [handsomemzx](https://acm.dingbacode.com/userstatus.php?user=handsomemzx)
  注：上面两个国产OJ不让用下划线。
  
-### 5. CodeForces: [OIMOmzx](https://codeforces.com/profile/OIMOmzx)
+### 5. CodeForces: [Miracle_ZX](https://codeforces.com/profile/Miracle_ZX)
 
 ### 6. Sphere OJ : 无
 
@@ -76,7 +68,7 @@
 
 ### 9. NOI Open Judge : [mzx](http://openjudge.cn/user/1032560/)
 
-### 10. ATCoder（lg remote judge 写过）: [OIMOmzx](https://atcoder.jp/users/OIMOmzx)
+### 10. ATCoder: [OIMOmzx](https://atcoder.jp/users/OIMOmzx)
 
 ### 11. Leetcode（常用） : [OIMOmzx](https://leetcode-cn.com/u/handsome_mzx/)
 
